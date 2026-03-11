@@ -362,7 +362,12 @@
     .ripple3 { animation-delay: 2s; }
     .flow-line { stroke-dasharray: 300; animation: drawLine 1.2s ease forwards; }
     .spoke-line { stroke-dasharray: 200; animation: drawLine 0.9s ease forwards; }
-    .chain-node { animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; opacity: 0; }
+    .chain-node {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      opacity: 0;
+    }
 
     @keyframes floatY {
       0%,100% { transform: translateY(0px); }
@@ -397,196 +402,129 @@
       border-bottom: 1px solid var(--border);
       padding: 5rem 2rem;
     }
-
-    .builder-container {
-      max-width: 1140px;
-      margin: 0 auto;
-    }
-
-    .builder-head {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
+    .builder-container { max-width: 1140px; margin: 0 auto; }
+    .builder-head { text-align: center; margin-bottom: 3rem; }
     .builder-head .eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
+      font-family: 'Inter', sans-serif; font-size: 0.62rem;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 0.75rem;
     }
-    .builder-head h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-    .builder-head p {
-      color: var(--text-sec);
-      font-weight: 300;
-      font-size: 1.05rem;
-    }
+    .builder-head h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 0.75rem; }
+    .builder-head p { color: var(--text-sec); font-weight: 300; font-size: 1.05rem; }
 
-    .builder-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
+    /* step 1 – biz input */
+    .bld-biz-row {
+      display: flex; gap: 0.75rem; max-width: 640px; margin: 0 auto;
     }
-
-    .field { margin-bottom: 1.4rem; }
-    .field label {
-      display: block;
-      font-size: 0.82rem;
-      color: var(--text-sec);
-      margin-bottom: 0.45rem;
-    }
-    .field input {
-      width: 100%;
-      background: var(--card);
-      border: 1px solid var(--border2);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      color: var(--text);
-      font-family: 'Heebo', sans-serif;
-      font-size: 0.98rem;
-      outline: none;
+    .bld-biz-row input {
+      flex: 1;
+      background: var(--card); border: 1px solid var(--border2);
+      border-radius: 8px; padding: 0.9rem 1.1rem;
+      color: var(--text); font-family: 'Heebo', sans-serif;
+      font-size: 1rem; outline: none;
       transition: border-color 0.25s, box-shadow 0.25s;
     }
-    .field input:focus {
-      border-color: rgba(255,255,255,0.25);
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+    .bld-biz-row input:focus {
+      border-color: rgba(255,255,255,0.3);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.05);
     }
-    .field input::placeholder { color: var(--text-dim); }
-
-    .sat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .sat-chip {
-      background: var(--card);
-      border: 1px solid var(--border2);
-      border-radius: 8px;
-      padding: 0.55rem 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: border-color 0.2s;
-    }
-    .sat-chip:focus-within { border-color: rgba(255,255,255,0.2); }
-
-    .sat-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      min-width: 14px;
-      flex-shrink: 0;
-    }
-
-    .sat-chip input {
-      background: none;
-      border: none;
-      color: var(--text);
-      font-family: 'Heebo', sans-serif;
-      font-size: 0.88rem;
-      outline: none;
-      width: 100%;
-      padding: 0;
-      box-shadow: none !important;
-    }
-    .sat-chip input::placeholder { color: var(--text-dim); }
+    .bld-biz-row input::placeholder { color: var(--text-dim); }
 
     .build-btn {
-      width: 100%;
-      padding: 0.9rem 1.5rem;
-      background: var(--white);
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-family: 'Heebo', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
+      padding: 0.9rem 1.5rem; background: var(--white); color: #000;
+      border: none; border-radius: 8px; font-family: 'Heebo', sans-serif;
+      font-size: 1rem; font-weight: 700; cursor: pointer; white-space: nowrap;
       transition: opacity 0.2s, transform 0.2s;
-      letter-spacing: 0.01em;
     }
-    .build-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .build-btn:hover { opacity: 0.88; transform: translateY(-1px); }
     .build-btn:active { transform: translateY(0); }
+    .build-btn.full { width: 100%; margin-top: 1.2rem; }
 
+    /* loading */
+    .bld-loading {
+      text-align: center; padding: 3rem 0;
+      display: none;
+    }
+    .bld-loading.show { display: block; }
+    .loading-line {
+      font-size: 1rem; color: var(--text-sec); font-weight: 300;
+    }
+    @keyframes dotPulse {
+      0%,80%,100% { opacity: 0; } 40% { opacity: 1; }
+    }
+    .dot1 { animation: dotPulse 1.4s infinite 0s; }
+    .dot2 { animation: dotPulse 1.4s infinite 0.2s; }
+    .dot3 { animation: dotPulse 1.4s infinite 0.4s; }
+
+    /* suggestions */
+    .bld-suggest { display: none; }
+    .bld-suggest.show { display: block; }
+    .suggest-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+    }
+
+    .suggest-cards { display: flex; flex-direction: column; gap: 0.85rem; }
+
+    .sug-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.1rem 1.25rem;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.2s;
+    }
+    .sug-card.show { opacity: 1; transform: translateY(0); }
+    .sug-card:hover { border-color: var(--border2); }
+
+    .sug-tag {
+      font-family: 'Inter', sans-serif; font-size: 0.6rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 0.5rem;
+    }
+    .sug-name {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+    .sug-why {
+      font-size: 0.85rem; color: var(--text-sec); font-weight: 300; line-height: 1.6;
+    }
+
+    .sug-sats-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem; }
+    .sug-sat-item {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+    }
+    .sug-sat-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.25); flex-shrink: 0; margin-top: 6px;
+    }
+    .sug-sat-body {}
+    .sug-sat-name { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+    .sug-sat-why { font-size: 0.8rem; color: var(--text-sec); font-weight: 300; }
+
+    /* canvas */
     .canvas-wrap {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; position: relative;
     }
-    .canvas-wrap::before {
-      content: '';
-      display: block;
-      padding-top: 100%;
-    }
-    .canvas-wrap canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
+    .canvas-wrap::before { content: ''; display: block; padding-top: 100%; }
+    .canvas-wrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
     .canvas-empty {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      pointer-events: none;
-      transition: opacity 0.4s;
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.75rem;
+      pointer-events: none; transition: opacity 0.4s;
     }
-    .canvas-empty-icon {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .canvas-empty p {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      text-align: center;
-      padding: 0 2rem;
-    }
+    .canvas-empty p { font-size: 0.85rem; color: var(--text-dim); text-align: center; padding: 0 2rem; }
 
-    /* score bar */
-    .score-bar {
-      margin-top: 1.2rem;
-      opacity: 0;
-      transition: opacity 0.6s ease 0.4s;
-    }
+    .score-bar { margin-top: 1.2rem; opacity: 0; transition: opacity 0.6s ease 0.4s; }
     .score-bar.show { opacity: 1; }
     .score-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--text-sec);
-      margin-bottom: 0.4rem;
+      display: flex; justify-content: space-between;
+      font-size: 0.8rem; color: var(--text-sec); margin-bottom: 0.4rem;
     }
     .score-label span:last-child { color: var(--text); font-weight: 600; }
-    .score-track {
-      height: 4px;
-      background: var(--border2);
-      border-radius: 100px;
-      overflow: hidden;
-    }
+    .score-track { height: 4px; background: var(--border2); border-radius: 100px; overflow: hidden; }
     .score-fill {
       height: 100%;
       background: linear-gradient(to right, rgba(255,255,255,0.4), rgba(255,255,255,0.9));
-      border-radius: 100px;
-      width: 0;
+      border-radius: 100px; width: 0;
       transition: width 1s cubic-bezier(0.16,1,0.3,1) 0.6s;
     }
 
@@ -698,10 +636,11 @@
     ════════════════════════════════ */
     @media (max-width: 780px) {
       .step-row, .step-wrap.flip .step-row { flex-direction: column; gap: 2rem; }
-      .builder-grid { grid-template-columns: 1fr; }
+      .suggest-grid { grid-template-columns: 1fr; }
+      .bld-biz-row { flex-direction: column; }
+      .bld-biz-row .build-btn { width: 100%; }
       .stats-bar { flex-direction: column; align-items: center; gap: 1.5rem; }
       .stat-item::after { display: none; }
-      .sat-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -953,46 +892,49 @@
         <div class="example-box"><strong>DJI:</strong> כשיש לך רחפן, גימבל ומיקרופון שלהם — אתה לא תקנה מצלמה של חברה אחרת. לא כי אתה לא יכול — כי פשוט לא שווה.</div>
       </div>
       <div class="step-vis">
-        <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- spokes from center to 4 products -->
-          <line x1="150" y1="118" x2="150" y2="62"  stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="182" y1="150" x2="238" y2="150" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="150" y1="182" x2="150" y2="238" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-          <line x1="118" y1="150" x2="62"  y2="150" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+        <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden">
+          <!-- spokes -->
+          <line x1="150" y1="118" x2="150" y2="70"  stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="182" y1="150" x2="230" y2="150" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="150" y1="182" x2="150" y2="230" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+          <line x1="118" y1="150" x2="70"  y2="150" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
 
           <!-- top: רחפן -->
-          <g class="chain-node" transform="translate(150,46)" style="animation-delay:.05s">
-            <circle r="24" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+          <g class="chain-node" transform="translate(150,52)" style="animation-delay:.05s">
+            <circle r="22" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
             <text y="4" text-anchor="middle" fill="#777" font-family="Heebo" font-size="11">רחפן</text>
           </g>
           <!-- right: גימבל -->
-          <g class="chain-node" transform="translate(254,150)" style="animation-delay:.18s">
-            <circle r="24" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+          <g class="chain-node" transform="translate(248,150)" style="animation-delay:.18s">
+            <circle r="22" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
             <text y="4" text-anchor="middle" fill="#777" font-family="Heebo" font-size="11">גימבל</text>
           </g>
           <!-- bottom: מיקרופון -->
-          <g class="chain-node" transform="translate(150,254)" style="animation-delay:.31s">
-            <circle r="24" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+          <g class="chain-node" transform="translate(150,248)" style="animation-delay:.31s">
+            <circle r="22" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
             <text y="4" text-anchor="middle" fill="#777" font-family="Heebo" font-size="10">מיקרופון</text>
           </g>
           <!-- left: מצלמה -->
-          <g class="chain-node" transform="translate(46,150)" style="animation-delay:.44s">
-            <circle r="24" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+          <g class="chain-node" transform="translate(52,150)" style="animation-delay:.44s">
+            <circle r="22" fill="#161616" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
             <text y="4" text-anchor="middle" fill="#777" font-family="Heebo" font-size="11">מצלמה</text>
           </g>
 
           <!-- center glow ring -->
-          <circle cx="150" cy="150" r="42" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
-          <circle class="ripple" cx="150" cy="150"/>
-          <circle class="ripple ripple2" cx="150" cy="150"/>
+          <circle cx="150" cy="150" r="40" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <circle class="ripple" cx="150" cy="150" r="22"/>
+          <circle class="ripple ripple2" cx="150" cy="150" r="22"/>
 
           <!-- center locked node -->
           <g class="chain-node" transform="translate(150,150)" style="animation-delay:.6s">
-            <circle r="30" fill="white" style="filter:drop-shadow(0 0 14px rgba(255,255,255,0.5))"/>
-            <!-- lock icon -->
-            <rect x="-9" y="-3" width="18" height="14" rx="3" fill="#000"/>
-            <path d="M-5 -3 V-7 a5 5 0 0 1 10 0 V-3" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <circle cx="0" cy="5" r="2" fill="#555"/>
+            <circle r="28" fill="white" style="filter:drop-shadow(0 0 14px rgba(255,255,255,0.5))"/>
+            <!-- clean padlock body -->
+            <rect x="-8" y="-1" width="16" height="11" rx="2" fill="#111"/>
+            <!-- padlock shackle: clean arch -->
+            <path d="M-4.5 -1 L-4.5 -5 A4.5 4.5 0 0 1 4.5 -5 L4.5 -1" stroke="#111" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+            <!-- keyhole -->
+            <circle cx="0" cy="4.5" r="2" fill="rgba(255,255,255,0.3)"/>
+            <rect x="-1" y="4.5" width="2" height="2.5" rx="0.5" fill="rgba(255,255,255,0.3)"/>
           </g>
         </svg>
       </div>
@@ -1006,56 +948,53 @@
     <div class="builder-head">
       <p class="eyebrow">Interactive Tool</p>
       <h2>בנה את האקו-סיסטם שלך</h2>
-      <p>הזן את המוצרים שלך — וקבל ויזואליזציה של האקו-סיסטם שלך</p>
+      <p>הזן את סוג העסק שלך — ואנחנו נבנה לך את האקו-סיסטם</p>
     </div>
-    <div class="builder-grid">
-      <div>
-        <div class="field">
-          <label>מה המוצר הראשון שלך? (מוצר הכניסה)</label>
-          <input id="inp-hero" type="text" placeholder="לדוגמה: אפליקציית ניהול פרויקטים" maxlength="36"/>
-        </div>
-        <div class="field">
-          <label>מה הדבק — הפלטפורמה שמחברת הכל?</label>
-          <input id="inp-glue" type="text" placeholder="לדוגמה: דאשבורד, API, חשבון משתמש" maxlength="36"/>
-        </div>
-        <div class="field">
-          <label>אילו מוצרים נוספים יכולים להצטרף לאקו-סיסטם?</label>
-          <div class="sat-grid">
-            <div class="sat-chip"><span class="sat-num">01</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
-            <div class="sat-chip"><span class="sat-num">02</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
-            <div class="sat-chip"><span class="sat-num">03</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
-            <div class="sat-chip"><span class="sat-num">04</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
-          </div>
-        </div>
-        <button class="build-btn" id="build-btn">צור את האקו-סיסטם שלי ←</button>
 
-        <div class="score-bar" id="score-bar">
-          <div class="score-label">
-            <span>עוצמת האקו-סיסטם</span>
-            <span id="score-val">0%</span>
-          </div>
-          <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
-        </div>
+    <!-- Step 1: enter business -->
+    <div id="bld-s1">
+      <div class="bld-biz-row">
+        <input id="inp-biz" type="text" placeholder="מה העסק שלך? למשל: מניקוריסטית, מסעדה, מאמן כושר..." maxlength="60"/>
+        <button class="build-btn" id="analyze-btn">נתח ←</button>
       </div>
+    </div>
 
-      <div>
-        <div class="canvas-wrap">
-          <canvas id="builder-canvas"></canvas>
-          <div class="canvas-empty" id="canvas-empty">
-            <div class="canvas-empty-icon">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <circle cx="9" cy="9" r="3" stroke="#333" stroke-width="1.2"/>
-                <circle cx="2" cy="3" r="1.5" stroke="#282828" stroke-width="1"/>
-                <circle cx="16" cy="3" r="1.5" stroke="#282828" stroke-width="1"/>
-                <circle cx="2" cy="15" r="1.5" stroke="#282828" stroke-width="1"/>
-                <circle cx="16" cy="15" r="1.5" stroke="#282828" stroke-width="1"/>
-                <line x1="6" y1="8" x2="3.5" y2="4.5" stroke="#1e1e1e" stroke-width="1"/>
-                <line x1="12" y1="8" x2="14.5" y2="4.5" stroke="#1e1e1e" stroke-width="1"/>
-                <line x1="6" y1="10" x2="3.5" y2="13.5" stroke="#1e1e1e" stroke-width="1"/>
-                <line x1="12" y1="10" x2="14.5" y2="13.5" stroke="#1e1e1e" stroke-width="1"/>
-              </svg>
+    <!-- Loading -->
+    <div class="bld-loading" id="bld-loading">
+      <p class="loading-line">מנתח את האקו-סיסטם שלך<span class="dot1">.</span><span class="dot2">.</span><span class="dot3">.</span></p>
+    </div>
+
+    <!-- Step 2: suggestions + canvas -->
+    <div class="bld-suggest" id="bld-suggest">
+      <div class="suggest-grid">
+        <div class="suggest-cards">
+          <div class="sug-card" id="sug-hero">
+            <div class="sug-tag">STEP 01 · מוצר הכניסה שלך</div>
+            <div class="sug-name" id="sug-hero-name"></div>
+            <div class="sug-why" id="sug-hero-why"></div>
+          </div>
+          <div class="sug-card" id="sug-glue">
+            <div class="sug-tag">STEP 03 · הדבק — הפלטפורמה שמחברת הכל</div>
+            <div class="sug-name" id="sug-glue-name"></div>
+            <div class="sug-why" id="sug-glue-why"></div>
+          </div>
+          <div class="sug-card" id="sug-sats">
+            <div class="sug-tag">STEP 04 · ההרחבות לאקו-סיסטם שלך</div>
+            <div class="sug-sats-list" id="sug-sats-list"></div>
+          </div>
+          <button class="build-btn full" id="build-viz-btn">צור ויזואליזציה ←</button>
+          <div class="score-bar" id="score-bar">
+            <div class="score-label"><span>עוצמת האקו-סיסטם</span><span id="score-val"></span></div>
+            <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="canvas-wrap">
+            <canvas id="builder-canvas"></canvas>
+            <div class="canvas-empty" id="canvas-empty">
+              <p>לחץ על "צור ויזואליזציה" לאחר הניתוח</p>
             </div>
-            <p>מלא את הפרטים ולחץ על הכפתור</p>
           </div>
         </div>
       </div>
@@ -1282,16 +1221,235 @@ document.querySelectorAll('[data-stat]').forEach(el => statsObs.observe(el));
 
 // ─── BUILDER ───
 (function() {
+
+  // ── Ecosystem database ──
+  const DB = [
+    {
+      keys: ['מניקוריסטית','ציפורניים','נייל','מניקור','פדיקור','gel','ג\'ל'],
+      hero: { name: 'מניקור קלאסי', why: 'שירות הכניסה הנגיש ביותר — מחיר סביר, תוצאה מיידית. זה מה שמביא את הלקוחה לראשונה.' },
+      glue: { name: 'ניהול תורים + כרטיס לקוחה אישי', why: 'כל לקוחה שחוזרת מצברת היסטוריה אצלך — צבע אחרון, תאריך, העדפות. היא לא תרצה להתחיל מחדש אצל מישהי אחרת.' },
+      sats: [
+        { name: 'ג\'ל ופדיקור ג\'ל', why: 'אותה לקוחה, אותו מפגש — שדרוג טבעי שמגדיל הכנסה ב-40%' },
+        { name: 'עיצוב ציפורניים לאירועים', why: 'חתונות, ימי הולדת, יציאות — פרמיום על השירות הרגיל' },
+        { name: 'מנוי חודשי קבוע', why: 'הכנסה צפויה לך + הלקוחה נעולה — לא תחפש חלופה' },
+        { name: 'מכירת מוצרי טיפוח ביתי', why: 'בין ביקורים — הכנסה פסיבית ותזכורת יומיומית למותג שלך' }
+      ]
+    },
+    {
+      keys: ['מספרה','שיער','תספורת','ספר','סטייליסט','צביעה','גוון'],
+      hero: { name: 'תספורת בסיסית', why: 'מחיר נגיש שמביא לקוחות חדשים. ברגע שהם אוהבים את העבודה — הם ממשיכים לשדרג.' },
+      glue: { name: 'אפליקציית תורים + היסטוריית לקוח', why: 'הגוון המדויק שלה, הטיפול שעבד — הכל שמור. כשהיא תנסה מספרה אחרת תצטרך להסביר מחדש מה היא רוצה.' },
+      sats: [
+        { name: 'צביעה וגוון', why: 'הכנסה פי 3-5 מתספורת רגילה, אותה לקוחה' },
+        { name: 'טיפולי שיער (קרטין, לחות)', why: 'עונתי, יקר, ונשים חוזרות לאותו מקום שהן סומכות עליו' },
+        { name: 'מנוי תחזוקה חודשי', why: 'תספורת + טיפול קצר — לקוחה שמשלמת כל חודש ולא עוזבת' },
+        { name: 'מוצרי שיער מקצועיים', why: 'מוכרת לה מה שהשתמשת בו עליה — אמון מובנה' }
+      ]
+    },
+    {
+      keys: ['מאמן כושר','פיטנס','אימון','כושר','גים','gym','trainer'],
+      hero: { name: 'שיעור היכרות חינמי + תוכנית אישית', why: 'כניסה ללא סיכון — ברגע שהם רואים תוצאות ב-2 שבועות, הם נשארים.' },
+      glue: { name: 'אפליקציית מעקב + תוכניות אישיות', why: 'הם רואים את ההתקדמות שלהם מדי יום. לעזוב אותך = לאבד את כל הנתונים והמסע.' },
+      sats: [
+        { name: 'אימון אישי קבוע', why: 'המוצר הפרמיום — אחד-על-אחד, תוצאות מהירות יותר' },
+        { name: 'תוכנית תזונה מותאמת', why: 'הגדלת ערך כפולה לאותו לקוח — פחות עבודה, הכנסה נוספת' },
+        { name: 'שיעורי קבוצה', why: 'מינוף זמן: שעה אחת = הכנסה פי 8 לעומת אימון יחיד' },
+        { name: 'קורס אונליין / תוכנית דיגיטלית', why: 'הכנסה פסיבית שעובדת בזמן שאתה ישן' }
+      ]
+    },
+    {
+      keys: ['יוגה','פילאטיס','מדיטציה','מיינדפולנס','נשימה'],
+      hero: { name: 'שיעור ניסיון חינמי', why: 'קהל שמחפש יוגה רוצה להרגיש את המדריך לפני שהוא מתחייב — שיעור חינמי מוריד את החסם לאפס.' },
+      glue: { name: 'אפליקציה / פלטפורמה עם שיעורים מוקלטים', why: 'הם מתרגלים גם בבית עם התוכן שלך — הקשר לא נגמר בצאתם מהסטודיו.' },
+      sats: [
+        { name: 'מנוי חודשי לשיעורים', why: 'הכנסה צפויה + נוכחות קבועה שבונה הרגל' },
+        { name: 'ריטריט סופ"ש / סדנאות', why: 'חוויה שמחזקת קשר ומייצרת הכנסה גבוהה בזמן קצר' },
+        { name: 'מוצרים (מזרן, ציוד, שמנים)', why: 'כשהם קונים ממך את המזרן — הם חושבים עליך כל יום' },
+        { name: 'קורס מדריכים מוסמכים', why: 'מכפיל את המותג שלך — הבוגרים שלך הם השגרירים שלך' }
+      ]
+    },
+    {
+      keys: ['מסעדה','בית קפה','קפה','אוכל','שף','קייטרינג','מטבח'],
+      hero: { name: 'ארוחה / מנה סיגנטורית', why: 'המנה שאנשים מדברים עליה — זה מה שגורם לאנשים לבוא בפעם הראשונה ולחזור.' },
+      glue: { name: 'אפליקציית הזמנות + מועדון לקוחות', why: 'כל הזמנה בונה היסטוריה. "ההזמנה הרגילה שלך" — זה Lock-in שמרגיש כמו פינוק.' },
+      sats: [
+        { name: 'משלוחים ביתיים', why: 'אותו מטבח, הכנסה מחוץ לשעות הפתיחה' },
+        { name: 'קייטרינג לאירועים', why: 'עסקאות גדולות מלקוחות שכבר מכירים ואוהבים אתכם' },
+        { name: 'מוצרים מהמטבח (רטבים, ריבות, לחמים)', why: 'הלקוח לוקח חתיכת המסעדה הביתה — הכנסה פסיבית ופרסום חי' },
+        { name: 'חוויות בישול / ארוחות שף פרטיות', why: 'פרמיום מוחלט — מי שמשלם 1,000₪ לארוחה שף לא יחפש חלופה' }
+      ]
+    },
+    {
+      keys: ['מאפייה','לחם','עוגות','קונדיטוריה','מתוקים','פטיסרי'],
+      hero: { name: 'לחמים יומיומיים / עוגות בסיס', why: 'מה שאנשים קונים כל שבוע — הרגל שנבנה בקלות.' },
+      glue: { name: 'הזמנות מראש + מנוי שבועי', why: 'לקוח שהזמין כבר הפכה לחלק מהשגרה שלו — לא צריך לחשוב על זה.' },
+      sats: [
+        { name: 'עוגות מיוחדות לאירועים', why: 'יום הולדת, חתונה — מכירה אחת שווה 10 רכישות רגילות' },
+        { name: 'סדנאות אפייה', why: 'הלקוחות הכי נאמנים שלך הופכים לתלמידים — וממשיכים לקנות ממך' },
+        { name: 'מוצרים לדרך (ריבות, שמנים, קמח מיוחד)', why: 'חנות קטנה בתוך המאפייה — הכנסה נוספת בלי שעות עבודה נוספות' },
+        { name: 'קייטרינג לעסקים', why: 'הזמנות גדולות וקבועות — עסק שמזמין לחם לפגישות כל שבוע' }
+      ]
+    },
+    {
+      keys: ['מטפל','פסיכולוג','קואוצ\'ר','ייעוץ נפשי','טיפול','מנטור','coaching'],
+      hero: { name: 'פגישת היכרות / מיפוי ראשוני', why: 'אנשים פוחדים להתחייב לטיפול ארוך — פגישה אחת מורידה את החסם ומתחילה מערכת יחסים.' },
+      glue: { name: 'פורטל לקוח + תיעוד התקדמות', why: 'הם רואים את הדרך שעשו. לעזוב = לאבד את כל העבודה שנעשתה יחד.' },
+      sats: [
+        { name: 'ליווי קבוע חודשי', why: 'הכנסה צפויה + קשר ארוך טווח שמוביל לתוצאות אמיתיות' },
+        { name: 'סדנאות קבוצתיות', why: 'שעה שלך שווה הכנסה פי 10 — ועוד חוויה קהילתית שיוצרת נאמנות' },
+        { name: 'קורס אונליין / תוכן דיגיטלי', why: 'עובד בזמן שאתה ישן — הכנסה פסיבית על בסיס המומחיות שלך' },
+        { name: 'ספר / פודקאסט / בלוג', why: 'מגנט לקוחות חדשים שכבר מכירים ומאמינים לך לפני פגישה ראשונה' }
+      ]
+    },
+    {
+      keys: ['מורה','חינוך','שיעורים','תגבור','ביה"ס','לימוד','פדגוג'],
+      hero: { name: 'שיעור ניסיון חינמי / מיפוי', why: 'הורים רוצים לראות איך המורה עובד עם הילד לפני התחייבות — שיעור חינמי מסלק את כל ההתנגדות.' },
+      glue: { name: 'דוחות התקדמות + פלטפורמת מטלות', why: 'ההורה רואה שיפור במספרים. לעבור מורה = לאבד את כל המידע על הילד.' },
+      sats: [
+        { name: 'קורס אונליין / חומרי לימוד', why: 'פעם אחת עשית — מרוויח ממנו שוב ושוב' },
+        { name: 'שיעורים קבוצתיים', why: 'אותה שעה, פי 6 הכנסה לעומת שיעור פרטי' },
+        { name: 'הכנה לבגרות / קורסים ממוקדי מטרה', why: 'עוצמה גבוהה, תשלום גבוה — הורים ישלמו הרבה כשהבגרות קרובה' },
+        { name: 'ייעוץ הורים', why: 'הרחבה טבעית — ההורה כבר סומך עליך עם הילד שלו' }
+      ]
+    },
+    {
+      keys: ['צלם','וידאו','צילום','קמרה','photographer','videographer','תמונות'],
+      hero: { name: 'חבילת צילום ראשונה במחיר מיוחד', why: 'כניסה ללא סיכון לגלריה שלך. תמונה אחת טובה מוכרת את כל החבילות הבאות.' },
+      glue: { name: 'גלריה דיגיטלית + ארכיון ללקוח', why: 'כל התמונות שלהם אצלך — חתונה, ילדים, עסקי. לשנות צלם = לאבד את הסגנון שמכירים.' },
+      sats: [
+        { name: 'צילומי אירועים (חתונות, בר מצוות)', why: 'עסקה אחת שווה עשרות שיעורים — ועם המלצות שמגיעות ממנה' },
+        { name: 'צילום מוצרים לעסקים', why: 'לקוח שחוזר כל פעם שמשיק מוצר חדש — הכנסה שוטפת' },
+        { name: 'קורס צילום / סדנאות', why: 'הופך את הידע שלך לנכס שמוכר בעצמו' },
+        { name: 'מכירת פרינטים ועיצוב', why: 'הכנסה פסיבית מהגלריה הקיימת שלך' }
+      ]
+    },
+    {
+      keys: ['מעצב','גרפיקאי','עיצוב','ברנדינג','לוגו','UI','UX','דיגיטל'],
+      hero: { name: 'עיצוב לוגו / זהות ויזואלית', why: 'כל עסק צריך לוגו — זו נקודת הכניסה הכי ברורה לעולם העיצוב.' },
+      glue: { name: 'Design System + ספריית נכסים ללקוח', why: 'כשהם בנו את הזהות הוויזואלית אצלך, לשנות מעצב = לבנות הכל מחדש.' },
+      sats: [
+        { name: 'עיצוב אתר / UX', why: 'אותו לקוח, אחרי הלוגו — השלב הטבעי הבא' },
+        { name: 'ריטיינר חודשי (עיצוב שוטף)', why: 'הכנסה קבועה — הם מקבלים מעצב "on call" בלי לגייס' },
+        { name: 'תבניות ונכסים דיגיטליים', why: 'הכנסה פסיבית — מוכר פעם אחת, נמכר שוב ושוב' },
+        { name: 'קורס / תוכן חינוכי', why: 'הופך אותך למומחה שקהל חדש מגיע אליו לפני שהוא יצר קשר' }
+      ]
+    },
+    {
+      keys: ['יועץ עסקי','מנטור','ייעוץ','אסטרטגיה','עסקים','business','פיתוח עסקי'],
+      hero: { name: 'אבחון עסקי ראשוני (חינמי או במחיר סמלי)', why: 'הראה להם בשעה אחת כמה ערך אתה יכול לתת — הם ישלמו לך להמשיך.' },
+      glue: { name: 'מערכת ניהול לקוחות + דשבורד מדדים', why: 'הם רואים את השיפור בנתונים בזמן אמת. לעזוב = לאבד את ה-baseline שנבנה.' },
+      sats: [
+        { name: 'ליווי שוטף חודשי', why: 'הכנסה צפויה + קשר עמוק שמייצר תוצאות ומלצות' },
+        { name: 'קורס / וובינר', why: 'מינוף — שעה אחת שמרוויחה ממנה שוב ושוב' },
+        { name: 'קהילה מנויים', why: 'יוצרים ערך מתמשך עם השקעת זמן מינימלית' },
+        { name: 'ספר / קורס אונליין', why: 'מנגנון לקוחות חדשים שעובד אוטומטית' }
+      ]
+    },
+    {
+      keys: ['נדל"ן','מתווך','דירה','דירות','נכסים','השקעות נדל"ן'],
+      hero: { name: 'הערכת שווי חינמית', why: 'אף מוכר לא יסרב להבין כמה הנכס שלו שווה — ונכנסת לשיחה.' },
+      glue: { name: 'פורטל לקוח + מעקב עסקאות', why: 'הם רואים את כל ההיסטוריה, המסמכים, ההתקדמות — אצלך.' },
+      sats: [
+        { name: 'ניהול נכסים שוטף', why: 'הכנסה פסיבית קבועה לאחר כל עסקה' },
+        { name: 'ייעוץ משקיעים', why: 'לקוח שמשקיע = קונה מרובה שמניב עמלות חוזרות' },
+        { name: 'קורס / תוכן השקעות נדל"ן', why: 'בונה אמון עם קהל חדש ומייצר לידים' },
+        { name: 'שירות משכנתאות / מימון', why: 'אותו לקוח, שלב ביניים — עמלה נוספת' }
+      ]
+    },
+    {
+      keys: ['SaaS','אפליקציה','סטארטאפ','startup','תוכנה','פלטפורמה','platform'],
+      hero: { name: 'Freemium / תוכנית חינמית', why: 'משתמש שפתר בעיה אחת עם המוצר שלך — יישאר. התחל מזה.' },
+      glue: { name: 'פלטפורמת הניהול המרכזית שלך', why: 'כל הדאטה, כל ההיסטוריה, כל ה-workflows שנבנו — אצלך. עלות המעבר = אפס מהמוצר.' },
+      sats: [
+        { name: 'תוכנית Pro / Premium', why: 'השדרוג הטבעי למי שכבר מכור למוצר' },
+        { name: 'Marketplace / אינטגרציות', why: 'כל אינטגרציה שהמשתמש מוסיף = עוד lock-in' },
+        { name: 'Enterprise תוכנית', why: 'ערוץ הכנסה שמייצר ARR פי 10-50' },
+        { name: 'API / Ecosystem לפיתוח', why: 'מפתחים שבונים עליך = ecosystem שמגדל את עצמו' }
+      ]
+    }
+  ];
+
+  const DEFAULT = {
+    hero: { name: 'מוצר הכניסה שלך', why: 'המוצר הראשון שפותר כאב אחד ספציפי — כל כך טוב שאי אפשר להתעלם ממנו.' },
+    glue: { name: 'פלטפורמה / אפליקציה מחברת', why: 'מה שגורם לכל המוצרים לדבר זה עם זה — ומקשה על הלקוח לעזוב.' },
+    sats: [
+      { name: 'מוצר שדרוג טבעי', why: 'אותו לקוח, אותו צורך — רק ברמה גבוהה יותר' },
+      { name: 'מוצר מנוי / הכנסה חוזרת', why: 'יוצר הכנסה קבועה ונעילה עדינה' },
+      { name: 'תוכן / קורס', why: 'מינוף — עשה פעם אחת, מרוויח שוב ושוב' },
+      { name: 'שירות פרמיום / VIP', why: 'הקהל הנאמן ביותר ישלם הרבה יותר עבור גישה מיוחדת' }
+    ]
+  };
+
+  function matchBiz(text) {
+    if (!text) return null;
+    const t = text.toLowerCase();
+    for (const entry of DB) {
+      if (entry.keys.some(k => t.includes(k.toLowerCase()))) return entry;
+    }
+    return null;
+  }
+
+  // ── UI logic ──
+  const analyzeBtn = document.getElementById('analyze-btn');
+  const loading = document.getElementById('bld-loading');
+  const suggestEl = document.getElementById('bld-suggest');
+  const buildVizBtn = document.getElementById('build-viz-btn');
+
+  analyzeBtn.addEventListener('click', () => {
+    const biz = document.getElementById('inp-biz').value.trim();
+    if (!biz) { document.getElementById('inp-biz').focus(); return; }
+    loading.classList.add('show');
+    setTimeout(() => {
+      loading.classList.remove('show');
+      const match = matchBiz(biz) || DEFAULT;
+      showSuggestions(biz, match);
+    }, 1600);
+  });
+
+  document.getElementById('inp-biz').addEventListener('keydown', e => {
+    if (e.key === 'Enter') analyzeBtn.click();
+  });
+
+  function showSuggestions(biz, data) {
+    document.getElementById('sug-hero-name').textContent = data.hero.name;
+    document.getElementById('sug-hero-why').textContent = data.hero.why;
+    document.getElementById('sug-glue-name').textContent = data.glue.name;
+    document.getElementById('sug-glue-why').textContent = data.glue.why;
+
+    const satsList = document.getElementById('sug-sats-list');
+    satsList.innerHTML = '';
+    data.sats.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'sug-sat-item';
+      div.innerHTML = `<div class="sug-sat-dot"></div><div class="sug-sat-body"><div class="sug-sat-name">${s.name}</div><div class="sug-sat-why">${s.why}</div></div>`;
+      satsList.appendChild(div);
+    });
+
+    suggestEl.classList.add('show');
+    const cards = document.querySelectorAll('.sug-card');
+    cards.forEach((c, i) => {
+      c.classList.remove('show');
+      setTimeout(() => c.classList.add('show'), 80 + i * 120);
+    });
+
+    // store for viz
+    analyzeBtn._currentData = data;
+  }
+
+  buildVizBtn.addEventListener('click', () => {
+    const data = analyzeBtn._currentData;
+    if (!data) return;
+    buildVisualization(data);
+  });
+
+  // ── Canvas ──
   const canvas = document.getElementById('builder-canvas');
   const ctx = canvas.getContext('2d');
   const emptyEl = document.getElementById('canvas-empty');
   const scoreBar = document.getElementById('score-bar');
   const scoreFill = document.getElementById('score-fill');
   const scoreVal = document.getElementById('score-val');
-
-  let ecosystem = null;
-  let animT = 0;
-  let rafId = null;
+  let ecosystem = null, animT = 0, rafId = null;
 
   function resizeCanvas() {
     const wrap = canvas.parentElement;
@@ -1299,37 +1457,28 @@ document.querySelectorAll('[data-stat]').forEach(el => statsObs.observe(el));
     canvas.height = wrap.offsetHeight;
     if (ecosystem) renderAt(1);
   }
-
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  document.getElementById('build-btn').addEventListener('click', () => {
-    const hero = document.getElementById('inp-hero').value.trim();
-    const glue = document.getElementById('inp-glue').value.trim();
-    const sats = Array.from(document.querySelectorAll('.inp-sat')).map(i => i.value.trim()).filter(Boolean);
-
-    if (!hero) { document.getElementById('inp-hero').focus(); return; }
-
-    ecosystem = { hero, glue, sats };
+  function buildVisualization(data) {
+    ecosystem = {
+      hero: data.hero.name,
+      glue: data.glue.name,
+      sats: data.sats.map(s => s.name)
+    };
     emptyEl.style.opacity = '0';
-
-    // score
-    const score = Math.min(100, (sats.length * 15) + (glue ? 40 : 0) + 10);
-    const label = score >= 80 ? 'חזק מאוד 🔥' : score >= 50 ? 'טוב, יש מה לשפר' : 'בתחילת הדרך';
     scoreBar.classList.add('show');
     setTimeout(() => {
-      scoreFill.style.width = score + '%';
-      scoreVal.textContent = score + '% · ' + label;
+      scoreFill.style.width = '85%';
+      scoreVal.textContent = 'אקו-סיסטם חזק ✓';
     }, 100);
-
-    // animate
     animT = 0;
     if (rafId) cancelAnimationFrame(rafId);
     animateBuilder();
-  });
+  }
 
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeOutBack(t) { return 1 + 1.70158 * 1 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2); }
+  function easeOutBack(t) { return 1 + 1.70158 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2); }
 
   function animateBuilder() {
     animT = Math.min(1, animT + 0.022);
@@ -1339,41 +1488,32 @@ document.querySelectorAll('[data-stat]').forEach(el => statsObs.observe(el));
 
   function trunc(s, n) { return s.length > n ? s.slice(0, n - 1) + '…' : s; }
 
-  function drawNode(x, y, r, label, style = 'sat') {
+  function drawNode(x, y, r, label, style) {
     if (style === 'hero') {
-      // white glow
       const g = ctx.createRadialGradient(x, y, 0, x, y, r * 3);
-      g.addColorStop(0, 'rgba(200,180,255,0.2)');
-      g.addColorStop(1, 'transparent');
-      ctx.beginPath(); ctx.arc(x, y, r * 3, 0, Math.PI * 2);
-      ctx.fillStyle = g; ctx.fill();
-
-      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff'; ctx.fill();
+      g.addColorStop(0, 'rgba(200,180,255,0.18)'); g.addColorStop(1, 'transparent');
+      ctx.beginPath(); ctx.arc(x, y, r * 3, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill();
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
       ctx.fillStyle = '#000';
-      const fs = Math.min(13, (r * 1.5) / Math.max(1, label.length) * 7);
+      const fs = Math.min(12, r * 10 / Math.max(6, label.length));
       ctx.font = `bold ${fs}px Heebo, sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(trunc(label, 14), x, y);
     } else if (style === 'glue') {
       ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#1a1a1a';
-      ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-      ctx.lineWidth = 1.5;
+      ctx.fillStyle = '#1a1a1a'; ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1.5;
       ctx.fill(); ctx.stroke();
-      ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      const fs = Math.min(11, (r * 1.4) / Math.max(1, label.length) * 6);
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      const fs = Math.min(10, r * 9 / Math.max(6, label.length));
       ctx.font = `${fs}px Heebo, sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(trunc(label, 14), x, y);
     } else {
       ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#141414';
-      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-      ctx.lineWidth = 1;
+      ctx.fillStyle = '#141414'; ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1;
       ctx.fill(); ctx.stroke();
-      ctx.fillStyle = 'rgba(255,255,255,0.65)';
-      const fs = Math.min(11, (r * 1.4) / Math.max(1, label.length) * 6);
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      const fs = Math.min(10, r * 9 / Math.max(6, label.length));
       ctx.font = `${fs}px Heebo, sans-serif`;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(trunc(label, 14), x, y);
@@ -1385,53 +1525,38 @@ document.querySelectorAll('[data-stat]').forEach(el => statsObs.observe(el));
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const { hero, glue, sats } = ecosystem;
     const cx = canvas.width / 2, cy = canvas.height / 2;
-    const maxR = Math.min(cx, cy) * 0.72;
-
+    const maxR = Math.min(cx, cy) * 0.7;
     const ep = easeOutCubic(p);
     const bp = easeOutBack(Math.min(1, p * 1.1));
 
-    // glue ring
     if (glue && p > 0.2) {
       const gp = easeOutCubic(Math.min(1, (p - 0.2) / 0.6));
-      ctx.beginPath();
-      ctx.arc(cx, cy, 54, 0, Math.PI * 2 * gp);
-      ctx.strokeStyle = `rgba(255,255,255,${0.06 * gp})`;
-      ctx.lineWidth = 30;
-      ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, 52, 0, Math.PI * 2 * gp);
+      ctx.strokeStyle = `rgba(255,255,255,${0.05 * gp})`; ctx.lineWidth = 28; ctx.stroke();
     }
 
-    // satellite nodes + spokes
     sats.forEach((label, i) => {
-      const ni = i + 1; // offset so hero is separate
       const total = sats.length;
       const angle = (i / total) * Math.PI * 2 - Math.PI / 2;
-      const tx = cx + Math.cos(angle) * maxR;
-      const ty = cy + Math.sin(angle) * maxR;
+      const tx = cx + Math.cos(angle) * maxR, ty = cy + Math.sin(angle) * maxR;
       const delay = 0.15 + i * 0.1;
       const sp = easeOutBack(Math.max(0, Math.min(1, (p - delay) / 0.45)));
       if (sp <= 0) return;
-
-      const nx = cx + (tx - cx) * sp;
-      const ny = cy + (ty - cy) * sp;
-
-      // spoke
+      const nx = cx + (tx - cx) * sp, ny = cy + (ty - cy) * sp;
       const spokep = easeOutCubic(Math.max(0, Math.min(1, (p - delay) / 0.3)));
       ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + (tx - cx) * spokep, cy + (ty - cy) * spokep);
       ctx.strokeStyle = `rgba(255,255,255,${0.1 * spokep})`; ctx.lineWidth = 1; ctx.stroke();
-
-      drawNode(nx, ny, Math.min(canvas.width, canvas.height) * 0.09, label, 'sat');
+      drawNode(nx, ny, Math.min(canvas.width, canvas.height) * 0.088, label, 'sat');
     });
 
-    // glue label (inside ring)
     if (glue && p > 0.5) {
       const gp = easeOutCubic(Math.min(1, (p - 0.5) / 0.4));
       ctx.globalAlpha = gp;
-      drawNode(cx, cy + 68, Math.min(canvas.width, canvas.height) * 0.07, glue, 'glue');
+      drawNode(cx, cy + Math.min(cx,cy)*0.3, Math.min(canvas.width, canvas.height) * 0.065, glue, 'glue');
       ctx.globalAlpha = 1;
     }
 
-    // hero node — last so it's on top, with spring
-    const heroR = Math.min(canvas.width, canvas.height) * 0.14 * bp;
+    const heroR = Math.min(canvas.width, canvas.height) * 0.13 * bp;
     ctx.globalAlpha = ep;
     drawNode(cx, cy, heroR, hero, 'hero');
     ctx.globalAlpha = 1;
