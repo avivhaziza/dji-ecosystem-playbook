@@ -314,11 +314,12 @@
 
     /* SVG anims */
     @keyframes nodePulse {
-      0%,100%{r:13;} 50%{r:16;}
+      0%,100%{ transform: scale(1); }
+      50%    { transform: scale(1.25); }
     }
     @keyframes rippleOut {
-      0%{r:22;opacity:.5;stroke-width:1.5}
-      100%{r:90;opacity:0;stroke-width:.5}
+      0%  { transform: scale(1);   opacity: .5; }
+      100%{ transform: scale(4.5); opacity: 0; }
     }
     @keyframes drawLine {
       from{stroke-dashoffset:300}
@@ -334,8 +335,18 @@
       to{transform:rotate(360deg)}
     }
 
-    .hero-dot { animation: nodePulse 2.5s ease-in-out infinite; }
-    .ripple { fill:none; stroke:rgba(255,255,255,0.2); animation: rippleOut 3s ease-out infinite; }
+    .hero-dot {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: nodePulse 2.5s ease-in-out infinite;
+    }
+    .ripple {
+      fill: none;
+      stroke: rgba(255,255,255,0.2);
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: rippleOut 3s ease-out infinite;
+    }
     .ripple2 { animation-delay: 1s; }
     .ripple3 { animation-delay: 2s; }
     .flow-line { stroke-dasharray: 300; animation: drawLine 1.2s ease forwards; }
