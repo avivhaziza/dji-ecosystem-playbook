@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>הפלייבוק של האקו-סיסטם</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>הפלייבוק של האקו-סיסטם | Aviv Haziza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg: #070707;
-      --surface: #0f0f0f;
-      --card: #141414;
-      --border: #1e1e1e;
-      --border-light: #2a2a2a;
-      --text: #f0f0f0;
-      --text-secondary: #888;
-      --text-muted: #444;
-      --accent: #fff;
+      --surface: #0d0d0d;
+      --card: #121212;
+      --border: #1c1c1c;
+      --border2: #252525;
+      --text: #efefef;
+      --text-sec: #777;
+      --text-dim: #3a3a3a;
+      --white: #ffffff;
+      --glow: rgba(180,160,255,0.07);
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -32,15 +32,30 @@
       overflow-x: hidden;
     }
 
-    /* ─── HERO ─── */
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
     .hero {
+      position: relative;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
       overflow: hidden;
+    }
+
+    /* subtle animated bg gradient */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(110,80,220,0.06) 0%, transparent 70%);
+      animation: bgPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
     }
 
     #hero-canvas {
@@ -56,55 +71,59 @@
       text-align: center;
       padding: 2rem;
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
+      transform: translateY(28px);
+      transition: opacity 1.4s cubic-bezier(0.16,1,0.3,1), transform 1.4s cubic-bezier(0.16,1,0.3,1);
     }
-
     .hero-content.visible { opacity: 1; transform: translateY(0); }
 
-    .hero-label {
+    .hero-eyebrow {
       font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-dim);
       margin-bottom: 1.5rem;
     }
 
     .hero-title {
-      font-size: clamp(3rem, 9vw, 7.5rem);
+      font-size: clamp(3.5rem, 10vw, 8.5rem);
       font-weight: 900;
-      line-height: 1.02;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(175deg, #fff 30%, #3a3a3a 100%);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+      background: linear-gradient(170deg, #ffffff 20%, #404040 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .hero-subtitle {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: var(--text-sec);
       font-weight: 300;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border-light);
+    .hero-chips {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 0.4rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border2);
       border-radius: 100px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
+      font-size: 0.8rem;
+      color: var(--text-sec);
+      letter-spacing: 0.02em;
     }
 
-    .hero-badge span { color: var(--text); font-weight: 500; }
-
-    .scroll-cue {
+    .scroll-hint {
       position: absolute;
       bottom: 2.5rem;
       left: 50%;
@@ -112,917 +131,1250 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      z-index: 2;
     }
-
-    .scroll-cue-line {
+    .scroll-hint-line {
       width: 1px;
-      height: 56px;
-      background: linear-gradient(to bottom, transparent, var(--text-muted));
-      animation: scueLine 2s ease-in-out infinite;
+      height: 64px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15));
+      animation: lineAnim 2s ease-in-out infinite;
+    }
+    @keyframes lineAnim {
+      0%,100%{opacity:.15;transform:scaleY(1);transform-origin:top}
+      50%{opacity:.7;transform:scaleY(.5);transform-origin:top}
     }
 
-    @keyframes scueLine {
-      0%, 100% { opacity: 0.2; transform: scaleY(1); transform-origin: top; }
-      50% { opacity: 0.8; transform: scaleY(0.6); transform-origin: top; }
+    /* ════════════════════════════════
+       STATS BAR
+    ════════════════════════════════ */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 0;
     }
 
-    /* ─── INTRO ─── */
-    .intro-section {
-      max-width: 780px;
+    .stat-item {
+      flex: 1;
+      max-width: 260px;
+      text-align: center;
+      padding: 1rem 2rem;
+      position: relative;
+    }
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .stat-item.visible .stat-num { opacity: 1; transform: translateY(0); }
+    .stat-item.visible .stat-num:nth-child(1) { transition-delay: 0.1s; }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-sec);
+      font-weight: 300;
+    }
+
+    /* ════════════════════════════════
+       INTRO
+    ════════════════════════════════ */
+    .intro {
+      max-width: 760px;
       margin: 0 auto;
-      padding: 6rem 2rem;
+      padding: 5rem 2rem;
       text-align: center;
     }
-
-    .intro-section h2 {
+    .intro h2 {
       font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 700;
       margin-bottom: 1.25rem;
       line-height: 1.25;
     }
-
-    .intro-section p {
+    .intro p {
       font-size: 1.1rem;
-      color: var(--text-secondary);
+      color: var(--text-sec);
       font-weight: 300;
-      line-height: 1.85;
+      line-height: 1.9;
     }
 
-    .divider {
+    .vdivider {
       width: 1px;
-      height: 80px;
-      background: linear-gradient(to bottom, transparent, var(--border-light), transparent);
+      height: 72px;
+      background: linear-gradient(to bottom, transparent, var(--border2), transparent);
       margin: 0 auto;
     }
 
-    /* ─── STEPS ─── */
-    .steps-section { padding: 2rem 0 6rem; }
+    /* ════════════════════════════════
+       STEPS
+    ════════════════════════════════ */
+    .steps { padding: 2rem 0 5rem; }
 
-    .step-row {
-      max-width: 1100px;
-      margin: 0 auto 7rem;
+    .step-wrap {
+      position: relative;
+      max-width: 1140px;
+      margin: 0 auto 5rem;
       padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      gap: 5rem;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
     }
 
-    .step-row.flip { flex-direction: row-reverse; }
+    /* huge background number */
+    .step-bg-num {
+      position: absolute;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(140px, 18vw, 220px);
+      font-weight: 900;
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      top: -40px;
+      right: 0;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+    .step-wrap.flip .step-bg-num { right: auto; left: 0; }
+
+    .step-row {
+      display: flex;
+      align-items: center;
+      gap: 4.5rem;
+      position: relative;
+      opacity: 0;
+      transform: translateY(44px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .step-wrap.flip .step-row { flex-direction: row-reverse; }
     .step-row.visible { opacity: 1; transform: translateY(0); }
 
     .step-text { flex: 1; }
 
-    .step-num {
+    .step-kicker {
       font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.7rem;
     }
 
     .step-title {
-      font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.12;
       margin-bottom: 1.1rem;
     }
 
-    .step-desc {
+    .step-body {
       font-size: 1.05rem;
-      color: var(--text-secondary);
+      color: var(--text-sec);
       line-height: 1.85;
       font-weight: 300;
       margin-bottom: 1.5rem;
     }
 
-    .step-pill {
-      display: inline-block;
+    .example-box {
       background: var(--card);
       border: 1px solid var(--border);
+      border-right: 2px solid rgba(255,255,255,0.15);
       border-radius: 8px;
-      padding: 0.85rem 1.1rem;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.88rem;
+      color: var(--text-sec);
+      line-height: 1.65;
+      transition: border-color 0.3s;
     }
+    .example-box:hover { border-right-color: rgba(255,255,255,0.4); }
+    .example-box strong { color: var(--text); font-weight: 600; }
 
-    .step-pill strong { color: var(--text); font-weight: 600; }
-
-    .step-visual {
+    .step-vis {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 280px;
+      min-height: 300px;
+    }
+    .step-vis svg { width: 100%; max-width: 360px; }
+
+    /* SVG anims */
+    @keyframes nodePulse {
+      0%,100%{r:13;} 50%{r:16;}
+    }
+    @keyframes rippleOut {
+      0%{r:22;opacity:.5;stroke-width:1.5}
+      100%{r:90;opacity:0;stroke-width:.5}
+    }
+    @keyframes drawLine {
+      from{stroke-dashoffset:300}
+      to{stroke-dashoffset:0}
+    }
+    @keyframes popIn {
+      0%{transform:scale(0);opacity:0}
+      70%{transform:scale(1.15);opacity:1}
+      100%{transform:scale(1);opacity:1}
+    }
+    @keyframes rotateSlow {
+      from{transform:rotate(0deg)}
+      to{transform:rotate(360deg)}
     }
 
-    .step-visual svg { width: 100%; max-width: 340px; height: auto; }
+    .hero-dot { animation: nodePulse 2.5s ease-in-out infinite; }
+    .ripple { fill:none; stroke:rgba(255,255,255,0.2); animation: rippleOut 3s ease-out infinite; }
+    .ripple2 { animation-delay: 1s; }
+    .ripple3 { animation-delay: 2s; }
+    .flow-line { stroke-dasharray: 300; animation: drawLine 1.2s ease forwards; }
+    .spoke-line { stroke-dasharray: 200; animation: drawLine 0.9s ease forwards; }
+    .chain-node { animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; opacity: 0; }
 
-    /* SVG animation helpers */
-    .node-dim { fill: #1c1c1c; stroke: #2e2e2e; stroke-width: 1.5; }
-    .node-bright { fill: #fff; filter: drop-shadow(0 0 12px rgba(255,255,255,0.5)); }
-    .link { stroke: #2a2a2a; stroke-width: 1; }
-    .link-bright { stroke: rgba(255,255,255,0.35); stroke-width: 1; }
-
-    @keyframes pulse {
-      0%, 100% { r: 12; opacity: 1; }
-      50% { r: 15; opacity: 0.8; }
-    }
-
-    @keyframes ripple {
-      0% { r: 20; opacity: 0.5; }
-      100% { r: 80; opacity: 0; }
-    }
-
-    @keyframes draw {
-      from { stroke-dashoffset: 300; }
-      to { stroke-dashoffset: 0; }
-    }
-
-    @keyframes fadein {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Step 1 – hero node pulse */
-    #s1-hero { animation: pulse 2.5s ease-in-out infinite; }
-
-    /* Step 2 – flow arrow draw */
-    #s2-line { stroke-dasharray: 300; animation: draw 1.5s ease forwards; }
-
-    /* Step 3 – spoke lines draw */
-    .spoke { stroke-dasharray: 120; animation: draw 0.8s ease forwards; }
-
-    /* Step 4 – ripple rings */
-    .ripple-ring { fill: none; stroke: #fff; stroke-width: 1; animation: ripple 3s ease-out infinite; }
-    .ripple-ring:nth-child(2) { animation-delay: 1s; }
-    .ripple-ring:nth-child(3) { animation-delay: 2s; }
-
-    /* Step 5 – chain links fadein */
-    .chain-link { animation: fadein 0.4s ease forwards; }
-
-    /* ─── BUILDER ─── */
+    /* ════════════════════════════════
+       BUILDER
+    ════════════════════════════════ */
     .builder-section {
       background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 6rem 2rem;
+      padding: 5rem 2rem;
     }
 
-    .builder-inner {
-      max-width: 1100px;
+    .builder-container {
+      max-width: 1140px;
       margin: 0 auto;
+    }
+
+    .builder-head {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .builder-head .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+    .builder-head h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .builder-head p {
+      color: var(--text-sec);
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    .builder-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 3rem;
       align-items: start;
     }
 
-    .builder-header { margin-bottom: 2.5rem; }
-
-    .builder-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .builder-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 0.75rem;
-    }
-
-    .builder-sub {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      font-weight: 300;
-    }
-
-    .builder-field { margin-bottom: 1.5rem; }
-
-    .builder-field label {
+    .field { margin-bottom: 1.4rem; }
+    .field label {
       display: block;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-      font-weight: 400;
+      font-size: 0.82rem;
+      color: var(--text-sec);
+      margin-bottom: 0.45rem;
     }
-
-    .builder-field input {
+    .field input {
       width: 100%;
       background: var(--card);
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border2);
       border-radius: 8px;
       padding: 0.75rem 1rem;
       color: var(--text);
       font-family: 'Heebo', sans-serif;
-      font-size: 1rem;
+      font-size: 0.98rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.25s, box-shadow 0.25s;
     }
+    .field input:focus {
+      border-color: rgba(255,255,255,0.25);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+    }
+    .field input::placeholder { color: var(--text-dim); }
 
-    .builder-field input:focus { border-color: rgba(255,255,255,0.3); }
-    .builder-field input::placeholder { color: var(--text-muted); }
-
-    .products-grid {
+    .sat-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
     }
 
-    .product-chip {
+    .sat-chip {
       background: var(--card);
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border2);
       border-radius: 8px;
-      padding: 0.6rem 0.85rem;
+      padding: 0.55rem 0.8rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      transition: border-color 0.2s;
+    }
+    .sat-chip:focus-within { border-color: rgba(255,255,255,0.2); }
+
+    .sat-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      min-width: 14px;
+      flex-shrink: 0;
     }
 
-    .product-chip input {
+    .sat-chip input {
       background: none;
       border: none;
       color: var(--text);
       font-family: 'Heebo', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       outline: none;
       width: 100%;
+      padding: 0;
+      box-shadow: none !important;
     }
+    .sat-chip input::placeholder { color: var(--text-dim); }
 
-    .product-chip input::placeholder { color: var(--text-muted); }
-
-    .chip-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      min-width: 16px;
-    }
-
-    .builder-btn {
+    .build-btn {
       width: 100%;
-      padding: 0.9rem;
-      background: #fff;
+      padding: 0.9rem 1.5rem;
+      background: var(--white);
       color: #000;
       border: none;
       border-radius: 8px;
       font-family: 'Heebo', sans-serif;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, transform 0.2s;
+      letter-spacing: 0.01em;
     }
+    .build-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .build-btn:active { transform: translateY(0); }
 
-    .builder-btn:hover { opacity: 0.9; }
-
-    .builder-canvas-wrap {
-      position: relative;
+    .canvas-wrap {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
+    }
+    .canvas-wrap::before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+    .canvas-wrap canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
 
-    #builder-canvas { width: 100%; height: 100%; }
-
-    .canvas-placeholder {
+    .canvas-empty {
       position: absolute;
       inset: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
       gap: 0.75rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
       pointer-events: none;
       transition: opacity 0.4s;
     }
-
-    .placeholder-icon {
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--border-light);
+    .canvas-empty-icon {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    .canvas-empty p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 0 2rem;
+    }
 
-    /* ─── FOOTER / CTA ─── */
+    /* score bar */
+    .score-bar {
+      margin-top: 1.2rem;
+      opacity: 0;
+      transition: opacity 0.6s ease 0.4s;
+    }
+    .score-bar.show { opacity: 1; }
+    .score-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-sec);
+      margin-bottom: 0.4rem;
+    }
+    .score-label span:last-child { color: var(--text); font-weight: 600; }
+    .score-track {
+      height: 4px;
+      background: var(--border2);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0.4), rgba(255,255,255,0.9));
+      border-radius: 100px;
+      width: 0;
+      transition: width 1s cubic-bezier(0.16,1,0.3,1) 0.6s;
+    }
+
+    /* ════════════════════════════════
+       CTA
+    ════════════════════════════════ */
     .cta-section {
       max-width: 680px;
       margin: 0 auto;
-      padding: 7rem 2rem;
+      padding: 7rem 2rem 5rem;
       text-align: center;
     }
-
-    .cta-label {
+    .cta-kicker {
       font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-dim);
       margin-bottom: 1.25rem;
     }
-
     .cta-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.05;
       margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
     }
-
-    .cta-sub {
+    .cta-body {
       font-size: 1.05rem;
-      color: var(--text-secondary);
+      color: var(--text-sec);
       font-weight: 300;
+      line-height: 1.8;
       margin-bottom: 2.5rem;
-      line-height: 1.75;
     }
-
-    .cta-row {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-w {
       padding: 0.8rem 2rem;
-      background: #fff;
+      background: var(--white);
       color: #000;
-      border: none;
       border-radius: 100px;
       font-family: 'Heebo', sans-serif;
       font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
+      font-weight: 700;
       text-decoration: none;
-      transition: opacity 0.2s;
+      border: none;
+      cursor: pointer;
+      transition: opacity .2s, transform .2s;
     }
-
-    .btn-primary:hover { opacity: 0.88; }
-
-    .btn-secondary {
+    .btn-w:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-g {
       padding: 0.8rem 2rem;
       background: transparent;
       color: var(--text);
-      border: 1px solid var(--border-light);
       border-radius: 100px;
       font-family: 'Heebo', sans-serif;
       font-size: 0.95rem;
       font-weight: 400;
-      cursor: pointer;
       text-decoration: none;
-      transition: border-color 0.2s;
+      border: 1px solid var(--border2);
+      cursor: pointer;
+      transition: border-color .2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+    .btn-g:hover { border-color: rgba(255,255,255,0.25); }
 
-    .btn-secondary:hover { border-color: rgba(255,255,255,0.3); }
-
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem;
-      text-align: center;
-      color: var(--text-muted);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-credit {
       font-size: 0.8rem;
+      color: var(--text-dim);
       font-family: 'Inter', sans-serif;
     }
+    .footer-ig {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      color: var(--text-sec);
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      transition: color .2s;
+    }
+    .footer-ig:hover { color: var(--text); }
+    .ig-icon {
+      width: 18px;
+      height: 18px;
+      border: 1px solid currentColor;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .step-row, .step-row.flip { flex-direction: column; gap: 2.5rem; }
-      .builder-inner { grid-template-columns: 1fr; }
-      .builder-canvas-wrap { aspect-ratio: 1; }
-      .products-grid { grid-template-columns: 1fr; }
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 780px) {
+      .step-row, .step-wrap.flip .step-row { flex-direction: column; gap: 2rem; }
+      .builder-grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-direction: column; align-items: center; gap: 1.5rem; }
+      .stat-item::after { display: none; }
+      .sat-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════ HERO ═══════════════ -->
+<!-- ══════════ HERO ══════════ -->
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
   <div class="hero-content" id="hero-content">
-    <p class="hero-label">Ecosystem Playbook · DJI Framework</p>
+    <p class="hero-eyebrow">DJI Ecosystem Playbook · Aviv Haziza</p>
     <h1 class="hero-title">5 צעדים<br>לאקו-סיסטם</h1>
-    <p class="hero-subtitle">הפלייבוק שDJI השתמשו בו כדי לנעול מיליוני יוצרים – ואיך להעתיק אותו לסטארטאפ שלך</p>
-    <div class="hero-badge">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#444" stroke-width="1.2"/><path d="M7 4v3l2 1.5" stroke="#444" stroke-width="1.2" stroke-linecap="round"/></svg>
-      <span>5 דקות קריאה</span> · שווה כל רגע
+    <p class="hero-sub">הפלייבוק שDJI השתמשו בו כדי לנעול מיליוני יוצרים —<br>ואיך לשכפל אותו לסטארטאפ שלך</p>
+    <div class="hero-chips">
+      <span class="chip">5 דקות קריאה</span>
+      <span class="chip">כולל כלי אינטראקטיבי</span>
+      <span class="chip">מתאים לכל סטארטאפ</span>
     </div>
   </div>
-  <div class="scroll-cue"><div class="scroll-cue-line"></div></div>
+  <div class="scroll-hint"><div class="scroll-hint-line"></div></div>
 </section>
 
-<!-- ═══════════════ INTRO ═══════════════ -->
-<div class="divider" style="margin-top: 0;"></div>
-<section class="intro-section">
+<!-- ══════════ STATS ══════════ -->
+<div class="stats-bar">
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="5" data-suffix=" מוצרים">0</div>
+    <div class="stat-label">קטגוריות באקו-סיסטם של DJI</div>
+  </div>
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="1" data-suffix=" אפליקציה">0</div>
+    <div class="stat-label">שמחברת את הכל</div>
+  </div>
+  <div class="stat-item" data-stat>
+    <div class="stat-num" data-count="70" data-suffix="%+">0</div>
+    <div class="stat-label">נתח שוק ברחפנים צרכניים</div>
+  </div>
+</div>
+
+<!-- ══════════ INTRO ══════════ -->
+<div class="vdivider" style="margin-top:0"></div>
+<section class="intro">
   <h2>הם לא ניצחו כי המוצרים שלהם הכי טובים</h2>
   <p>
-    DJI שולטת בשוק יוצרי התוכן לא בגלל שהרחפן שלהם הכי טוב בעולם.
-    הם ניצחו כי הם הפכו ממוכרי מוצר <strong style="color: var(--text);">למפעילי אקו-סיסטם</strong>.
-    ברגע שאתה בפנים — קשה מאוד לצאת.
-    הנה איך הם עשו את זה, ואיך אתה יכול לשכפל את הפלייבוק.
+    DJI שולטת בשוק יוצרי התוכן לא בגלל מפרטים טכניים.
+    הם ניצחו כי הם הפסיקו למכור מוצרים — והתחילו לבנות <strong style="color:var(--text)">אקו-סיסטם</strong>.
+    ברגע שאתה בפנים, לצאת פשוט לא שווה.
+    הנה חמשת הצעדים שהם עשו, ואיך לשכפל אותם.
   </p>
 </section>
-<div class="divider"></div>
+<div class="vdivider"></div>
 
-<!-- ═══════════════ STEPS ═══════════════ -->
-<section class="steps-section">
+<!-- ══════════ STEPS ══════════ -->
+<section class="steps">
 
   <!-- STEP 1 -->
-  <div class="step-row" data-observe>
-    <div class="step-text">
-      <p class="step-num">STEP 01</p>
-      <h2 class="step-title">מוצר כניסה<br>שאי אפשר להתעלם ממנו</h2>
-      <p class="step-desc">
-        המוצר הראשון לא חייב להיות הכי מושלם בשוק. הוא חייב לפתור כאב אחד כל כך טוב, שהמשתמש לא מסוגל לדמיין חיים בלעדיו. DJI עשו את זה עם הרחפן — מוצר שהמיר אנשים מ"סתם יוצר" ל"יוצר עם DJI".
-      </p>
-      <div class="step-pill">
-        <strong>DJI:</strong> רחפן שצלמים מקצועיים רצו להשתמש בו — במחיר שכולם יכולים להרשות לעצמם.
+  <div class="step-wrap">
+    <span class="step-bg-num">01</span>
+    <div class="step-row" data-observe>
+      <div class="step-text">
+        <p class="step-kicker">STEP 01</p>
+        <h2 class="step-title">מוצר כניסה<br>שאי אפשר להתעלם ממנו</h2>
+        <p class="step-body">המוצר הראשון לא חייב להיות הכי מושלם. הוא חייב לפתור כאב אחד כל כך טוב שהמשתמש לא מסוגל לחשוב על חזרה אחורה. DJI עשו את זה עם הרחפן — מוצר שהמיר אנשים מ"סתם יוצר" ל"יוצר עם DJI".</p>
+        <div class="example-box"><strong>DJI:</strong> רחפן שצלמים מקצועיים רצו — במחיר שכולם יכולים להרשות לעצמם.</div>
       </div>
-    </div>
-    <div class="step-visual">
-      <!-- One bright node among dim nodes -->
-      <svg viewBox="0 0 300 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- dim nodes -->
-        <circle cx="60"  cy="60"  r="10" class="node-dim"/>
-        <circle cx="240" cy="60"  r="10" class="node-dim"/>
-        <circle cx="40"  cy="200" r="10" class="node-dim"/>
-        <circle cx="260" cy="200" r="10" class="node-dim"/>
-        <circle cx="150" cy="230" r="10" class="node-dim"/>
-        <!-- links dim -->
-        <line x1="60" y1="60" x2="240" y2="60" class="link"/>
-        <line x1="60" y1="60" x2="150" y2="130" class="link"/>
-        <line x1="240" y1="60" x2="150" y2="130" class="link"/>
-        <line x1="40" y1="200" x2="150" y2="130" class="link"/>
-        <line x1="260" y1="200" x2="150" y2="130" class="link"/>
-        <line x1="150" y1="230" x2="150" y2="130" class="link"/>
-        <!-- glow ring -->
-        <circle cx="150" cy="130" r="26" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <!-- HERO node -->
-        <circle id="s1-hero" cx="150" cy="130" r="12" fill="#fff" style="filter: drop-shadow(0 0 14px rgba(255,255,255,0.7))"/>
-        <!-- label -->
-        <text x="150" y="108" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter" font-size="11" letter-spacing="2">HERO PRODUCT</text>
-      </svg>
+      <div class="step-vis">
+        <svg viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- dim background nodes -->
+          <circle cx="68" cy="68" r="11" fill="#151515" stroke="#222"/>
+          <circle cx="252" cy="68" r="11" fill="#151515" stroke="#222"/>
+          <circle cx="44" cy="212" r="11" fill="#151515" stroke="#222"/>
+          <circle cx="276" cy="212" r="11" fill="#151515" stroke="#222"/>
+          <circle cx="160" cy="240" r="11" fill="#151515" stroke="#222"/>
+          <!-- faint links -->
+          <line x1="68" y1="68" x2="160" y2="140" stroke="#1e1e1e"/>
+          <line x1="252" y1="68" x2="160" y2="140" stroke="#1e1e1e"/>
+          <line x1="44" y1="212" x2="160" y2="140" stroke="#1e1e1e"/>
+          <line x1="276" y1="212" x2="160" y2="140" stroke="#1e1e1e"/>
+          <line x1="160" y1="240" x2="160" y2="140" stroke="#1e1e1e"/>
+          <!-- outer glow ring -->
+          <circle cx="160" cy="140" r="32" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <!-- ripple rings -->
+          <circle class="ripple" cx="160" cy="140"/>
+          <circle class="ripple ripple2" cx="160" cy="140"/>
+          <circle class="ripple ripple3" cx="160" cy="140"/>
+          <!-- hero node -->
+          <circle class="hero-dot" cx="160" cy="140" r="13" fill="white" style="filter:drop-shadow(0 0 16px rgba(255,255,255,0.8))"/>
+          <!-- label above -->
+          <text x="160" y="100" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-family="Inter" font-size="10" letter-spacing="3">HERO</text>
+          <text x="160" y="114" text-anchor="middle" fill="rgba(255,255,255,0.2)" font-family="Inter" font-size="10" letter-spacing="3">PRODUCT</text>
+        </svg>
+      </div>
     </div>
   </div>
 
   <!-- STEP 2 -->
-  <div class="step-row flip" data-observe>
-    <div class="step-text">
-      <p class="step-num">STEP 02</p>
-      <h2 class="step-title">מפה את הוורקפלואו<br>של המשתמש</h2>
-      <p class="step-desc">
-        מה המשתמש שלך עושה <em>לפני</em> שהוא משתמש במוצר שלך? ומה <em>אחרי</em>? בדיוק שם מתחבאים המוצרים הבאים שלך. DJI הבינו שאחרי הטיסה — צריך לערוך. אחרי העריכה — צריך לשתף. לכל שלב יש כלי.
-      </p>
-      <div class="step-pill">
-        <strong>DJI:</strong> לפני ← טיסה ← עריכה ← שיתוף ← הצגה. לכל שלב — מוצר DJI.
+  <div class="step-wrap flip">
+    <span class="step-bg-num">02</span>
+    <div class="step-row" data-observe>
+      <div class="step-text">
+        <p class="step-kicker">STEP 02</p>
+        <h2 class="step-title">מפה את הוורקפלואו<br>של המשתמש שלך</h2>
+        <p class="step-body">מה המשתמש עושה <em>לפני</em> שהוא משתמש במוצר שלך? מה הוא עושה <em>אחרי</em>? בדיוק שם מסתתרים המוצרים הבאים שלך. DJI הבינו: לפני הטיסה יש תכנון, אחרי הטיסה יש עריכה ושיתוף.</p>
+        <div class="example-box"><strong>DJI:</strong> תכנון ← טיסה ← עריכה ← שיתוף — לכל שלב יש מוצר DJI.</div>
       </div>
-    </div>
-    <div class="step-visual">
-      <svg viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- boxes -->
-        <rect x="10" y="80" width="72" height="40" rx="6" fill="#1a1a1a" stroke="#2e2e2e" stroke-width="1"/>
-        <text x="46" y="105" text-anchor="middle" fill="#555" font-family="Heebo" font-size="11">לפני</text>
+      <div class="step-vis">
+        <svg viewBox="0 0 340 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- BEFORE box -->
+          <rect x="8" y="76" width="80" height="48" rx="8" fill="#111" stroke="#222"/>
+          <text x="48" y="103" text-anchor="middle" fill="#444" font-family="Heebo" font-size="13">לפני</text>
 
-        <rect x="124" y="72" width="72" height="56" rx="8" fill="#fff" style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.3))"/>
-        <text x="160" y="103" text-anchor="middle" fill="#000" font-family="Heebo" font-size="13" font-weight="700">המוצר</text>
-        <text x="160" y="117" text-anchor="middle" fill="rgba(0,0,0,0.5)" font-family="Heebo" font-size="10">שלך</text>
+          <!-- PRODUCT box (bright) -->
+          <rect x="130" y="64" width="80" height="72" rx="10" fill="white" style="filter:drop-shadow(0 0 18px rgba(255,255,255,0.25))"/>
+          <text x="170" y="103" text-anchor="middle" fill="#111" font-family="Heebo" font-size="14" font-weight="700">המוצר</text>
+          <text x="170" y="119" text-anchor="middle" fill="#555" font-family="Heebo" font-size="11">שלך</text>
 
-        <rect x="238" y="80" width="72" height="40" rx="6" fill="#1a1a1a" stroke="#2e2e2e" stroke-width="1"/>
-        <text x="274" y="105" text-anchor="middle" fill="#555" font-family="Heebo" font-size="11">אחרי</text>
+          <!-- AFTER box -->
+          <rect x="252" y="76" width="80" height="48" rx="8" fill="#111" stroke="#222"/>
+          <text x="292" y="103" text-anchor="middle" fill="#444" font-family="Heebo" font-size="13">אחרי</text>
 
-        <!-- arrows -->
-        <path id="s2-line" d="M82 100 L124 100" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M118 96 L124 100 L118 104" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- arrows -->
+          <path class="flow-line" d="M88 100 L130 100" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M124 96 L130 100 L124 104" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-        <path d="M196 100 L238 100" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M232 96 L238 100 L232 104" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M210 100 L252 100" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="4 3"/>
+          <path d="M246 96 L252 100 L246 104" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-        <!-- question marks at ends -->
-        <text x="46" y="155" text-anchor="middle" fill="#333" font-family="Inter" font-size="22" font-weight="700">?</text>
-        <text x="274" y="155" text-anchor="middle" fill="#333" font-family="Inter" font-size="22" font-weight="700">?</text>
-        <text x="46" y="170" text-anchor="middle" fill="#2e2e2e" font-family="Heebo" font-size="9">הזדמנות</text>
-        <text x="274" y="170" text-anchor="middle" fill="#2e2e2e" font-family="Heebo" font-size="9">הזדמנות</text>
-      </svg>
+          <!-- opportunity labels -->
+          <text x="48" y="152" text-anchor="middle" fill="#2a2a2a" font-family="Inter" font-size="26" font-weight="900">?</text>
+          <text x="292" y="152" text-anchor="middle" fill="#2a2a2a" font-family="Inter" font-size="26" font-weight="900">?</text>
+          <text x="48" y="167" text-anchor="middle" fill="#252525" font-family="Heebo" font-size="10">הזדמנות</text>
+          <text x="292" y="167" text-anchor="middle" fill="#252525" font-family="Heebo" font-size="10">הזדמנות</text>
+        </svg>
+      </div>
     </div>
   </div>
 
   <!-- STEP 3 -->
-  <div class="step-row" data-observe>
-    <div class="step-text">
-      <p class="step-num">STEP 03</p>
-      <h2 class="step-title">בנה את הדבק —<br>הפלטפורמה שמחברת</h2>
-      <p class="step-desc">
-        בלי דבק, יש לך קטלוג מוצרים — לא אקו-סיסטם. הדבק יכול להיות אפליקציה, API, חשבון משתמש, או פורמט קובץ. DJI Fly היא האפליקציה שמחברת את כל המוצרים שלהם לחוויה אחת.
-      </p>
-      <div class="step-pill">
-        <strong>DJI Fly:</strong> אפליקציה אחת שולטת על הרחפן, מייבאת מהגימבל, מייצאת לפוסטפרדקשן.
+  <div class="step-wrap">
+    <span class="step-bg-num">03</span>
+    <div class="step-row" data-observe>
+      <div class="step-text">
+        <p class="step-kicker">STEP 03</p>
+        <h2 class="step-title">בנה את הדבק —<br>הפלטפורמה שמחברת</h2>
+        <p class="step-body">בלי דבק יש לך קטלוג מוצרים, לא אקו-סיסטם. הדבק יכול להיות אפליקציה, API, חשבון משתמש, או פורמט קובץ. זה מה שגורם לכל המוצרים לדבר זה עם זה.</p>
+        <div class="example-box"><strong>DJI Fly:</strong> אפליקציה אחת ששולטת על הרחפן, מייבאת מהגימבל, ומייצאת לפוסטפרדקשן.</div>
       </div>
-    </div>
-    <div class="step-visual">
-      <svg viewBox="0 0 300 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- center hub -->
-        <circle cx="150" cy="140" r="28" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-        <circle cx="150" cy="140" r="16" fill="#fff" style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.5))"/>
-        <text x="150" y="144" text-anchor="middle" fill="#000" font-family="Inter" font-size="9" font-weight="700">HUB</text>
+      <div class="step-vis">
+        <svg viewBox="0 0 320 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- hub glow -->
+          <circle cx="160" cy="150" r="44" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
 
-        <!-- spokes & satellite nodes -->
-        <!-- top -->
-        <line x1="150" y1="112" x2="150" y2="52" class="spoke link-bright" style="animation-delay:0s"/>
-        <circle cx="150" cy="40" r="10" class="node-dim"/><text x="150" y="44" text-anchor="middle" fill="#555" font-family="Heebo" font-size="9">רחפן</text>
-        <!-- right -->
-        <line x1="176" y1="128" x2="234" y2="90" class="spoke link-bright" style="animation-delay:0.15s"/>
-        <circle cx="244" cy="84" r="10" class="node-dim"/><text x="264" y="88" fill="#555" font-family="Heebo" font-size="9">גימבל</text>
-        <!-- bottom-right -->
-        <line x1="172" y1="155" x2="228" y2="200" class="spoke link-bright" style="animation-delay:0.3s"/>
-        <circle cx="238" cy="210" r="10" class="node-dim"/><text x="254" y="214" fill="#555" font-family="Heebo" font-size="9">מצלמה</text>
-        <!-- bottom-left -->
-        <line x1="128" y1="155" x2="72" y2="200" class="spoke link-bright" style="animation-delay:0.45s"/>
-        <circle cx="62" cy="210" r="10" class="node-dim"/><text x="12" y="214" fill="#555" font-family="Heebo" font-size="9">מיקרופון</text>
-        <!-- left -->
-        <line x1="124" y1="128" x2="66" y2="90" class="spoke link-bright" style="animation-delay:0.6s"/>
-        <circle cx="56" cy="84" r="10" class="node-dim"/><text x="6" y="88" fill="#555" font-family="Heebo" font-size="9">אפליקציה</text>
-      </svg>
+          <!-- spoke lines — drawn first -->
+          <!-- top: רחפן at (160,46) -->
+          <line class="spoke-line" x1="160" y1="108" x2="160" y2="68" stroke="rgba(255,255,255,0.18)" stroke-width="1" style="animation-delay:.05s"/>
+          <!-- top-right: גימבל at (252,80) -->
+          <line class="spoke-line" x1="192" y1="122" x2="236" y2="98" stroke="rgba(255,255,255,0.18)" stroke-width="1" style="animation-delay:.15s"/>
+          <!-- bottom-right: מצלמה at (252,220) -->
+          <line class="spoke-line" x1="192" y1="178" x2="236" y2="202" stroke="rgba(255,255,255,0.18)" stroke-width="1" style="animation-delay:.25s"/>
+          <!-- bottom: מיקרופון at (160,254) -->
+          <line class="spoke-line" x1="160" y1="192" x2="160" y2="232" stroke="rgba(255,255,255,0.18)" stroke-width="1" style="animation-delay:.35s"/>
+          <!-- top-left: DJI Fly at (68,80) -->
+          <line class="spoke-line" x1="128" y1="122" x2="84" y2="98" stroke="rgba(255,255,255,0.18)" stroke-width="1" style="animation-delay:.45s"/>
+
+          <!-- satellite nodes with properly centered labels -->
+          <!-- top: רחפן -->
+          <g transform="translate(160,46)">
+            <circle r="22" fill="#141414" stroke="#252525" stroke-width="1.2"/>
+            <text y="4" text-anchor="middle" fill="#666" font-family="Heebo" font-size="11">רחפן</text>
+          </g>
+          <!-- top-right: גימבל -->
+          <g transform="translate(252,80)">
+            <circle r="22" fill="#141414" stroke="#252525" stroke-width="1.2"/>
+            <text y="4" text-anchor="middle" fill="#666" font-family="Heebo" font-size="11">גימבל</text>
+          </g>
+          <!-- bottom-right: מצלמה -->
+          <g transform="translate(252,220)">
+            <circle r="22" fill="#141414" stroke="#252525" stroke-width="1.2"/>
+            <text y="4" text-anchor="middle" fill="#666" font-family="Heebo" font-size="11">מצלמה</text>
+          </g>
+          <!-- bottom: מיקרופון -->
+          <g transform="translate(160,254)">
+            <circle r="22" fill="#141414" stroke="#252525" stroke-width="1.2"/>
+            <text y="4" text-anchor="middle" fill="#666" font-family="Heebo" font-size="10">מיקרופון</text>
+          </g>
+          <!-- top-left: DJI Fly -->
+          <g transform="translate(68,80)">
+            <circle r="22" fill="#141414" stroke="#252525" stroke-width="1.2"/>
+            <text y="-3" text-anchor="middle" fill="#666" font-family="Heebo" font-size="10">DJI</text>
+            <text y="9" text-anchor="middle" fill="#666" font-family="Heebo" font-size="10">Fly</text>
+          </g>
+
+          <!-- hub center -->
+          <circle cx="160" cy="150" r="28" fill="white" style="filter:drop-shadow(0 0 12px rgba(255,255,255,0.5))"/>
+          <text x="160" y="146" text-anchor="middle" fill="#000" font-family="Inter" font-size="9" font-weight="700" letter-spacing="1">THE</text>
+          <text x="160" y="158" text-anchor="middle" fill="#000" font-family="Inter" font-size="9" font-weight="700" letter-spacing="1">GLUE</text>
+        </svg>
+      </div>
     </div>
   </div>
 
   <!-- STEP 4 -->
-  <div class="step-row flip" data-observe>
-    <div class="step-text">
-      <p class="step-num">STEP 04</p>
-      <h2 class="step-title">התרחב תמיד<br>בצמידות</h2>
-      <p class="step-desc">
-        כל מוצר חדש שאתה מוסיף לאקו-סיסטם צריך להרגיש כמו "המשך טבעי" — לא קפיצה. המשתמש הקיים צריך לחשוב "כמובן שזה הגיוני". DJI לא קפצו ממצלמות לטלפונים — הם הרחיבו לגימבלים, ואז למיקרופונים, ואז למצלמות אקשן.
-      </p>
-      <div class="step-pill">
-        <strong>הכלל:</strong> כל מוצר חדש חייב לשרת את אותו משתמש, באותו ורקפלואו.
+  <div class="step-wrap flip">
+    <span class="step-bg-num">04</span>
+    <div class="step-row" data-observe>
+      <div class="step-text">
+        <p class="step-kicker">STEP 04</p>
+        <h2 class="step-title">התרחב תמיד<br>בצמידות</h2>
+        <p class="step-body">כל מוצר חדש שאתה מוסיף לאקו-סיסטם צריך להרגיש כמו "המשך טבעי" — לא קפיצה. המשתמש הקיים צריך לחשוב "כמובן שזה הגיוני". DJI לא קפצו ממצלמות לטלפונים — הם הרחיבו לגימבלים, ואז למיקרופונים, ואז למצלמות אקשן.</p>
+        <div class="example-box"><strong>הכלל:</strong> כל מוצר חדש חייב לשרת את אותו משתמש, באותו וורקפלואו.</div>
       </div>
-    </div>
-    <div class="step-visual">
-      <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- ripple rings -->
-        <circle class="ripple-ring" cx="140" cy="140" r="20" style="animation-delay:0s"/>
-        <circle class="ripple-ring" cx="140" cy="140" r="20" style="animation-delay:1s"/>
-        <circle class="ripple-ring" cx="140" cy="140" r="20" style="animation-delay:2s"/>
-        <!-- static rings for context -->
-        <circle cx="140" cy="140" r="50" stroke="#1e1e1e" stroke-width="1" fill="none"/>
-        <circle cx="140" cy="140" r="90" stroke="#181818" stroke-width="1" fill="none"/>
-        <!-- center -->
-        <circle cx="140" cy="140" r="22" fill="#fff" style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.4))"/>
-        <text x="140" y="145" text-anchor="middle" fill="#000" font-family="Heebo" font-size="10" font-weight="700">מוצר 1</text>
-        <!-- ring 1 labels -->
-        <text x="140" y="84" text-anchor="middle" fill="#555" font-family="Heebo" font-size="10">מוצר 2</text>
-        <text x="196" y="148" fill="#555" font-family="Heebo" font-size="10">מוצר 3</text>
-        <!-- ring 2 labels -->
-        <text x="140" y="46" text-anchor="middle" fill="#333" font-family="Heebo" font-size="10">מוצר 4</text>
-        <text x="234" y="148" fill="#333" font-family="Heebo" font-size="10">מוצר 5</text>
-      </svg>
+      <div class="step-vis">
+        <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- outer ring -->
+          <circle cx="150" cy="150" r="120" stroke="#141414" stroke-width="1" fill="none"/>
+          <!-- mid ring -->
+          <circle cx="150" cy="150" r="80" stroke="#191919" stroke-width="1" fill="none"/>
+          <!-- inner ring -->
+          <circle cx="150" cy="150" r="44" stroke="#222" stroke-width="1" fill="none"/>
+
+          <!-- ripple rings -->
+          <circle class="ripple" cx="150" cy="150"/>
+          <circle class="ripple ripple2" cx="150" cy="150"/>
+          <circle class="ripple ripple3" cx="150" cy="150"/>
+
+          <!-- labels on rings -->
+          <text x="150" y="68" text-anchor="middle" fill="#333" font-family="Heebo" font-size="11">מוצר 3</text>
+          <text x="236" y="158" fill="#2a2a2a" font-family="Heebo" font-size="11">מוצר 4</text>
+          <text x="150" y="28" text-anchor="middle" fill="#252525" font-family="Heebo" font-size="11">מוצר 5</text>
+
+          <!-- center node -->
+          <circle cx="150" cy="150" r="28" fill="white" style="filter:drop-shadow(0 0 14px rgba(255,255,255,0.4))"/>
+          <text x="150" y="146" text-anchor="middle" fill="#111" font-family="Heebo" font-size="10" font-weight="700">מוצר</text>
+          <text x="150" y="160" text-anchor="middle" fill="#111" font-family="Heebo" font-size="10" font-weight="700">ראשון</text>
+
+          <!-- ring 1 label -->
+          <text x="150" y="106" text-anchor="middle" fill="#444" font-family="Heebo" font-size="11">מוצר 2</text>
+        </svg>
+      </div>
     </div>
   </div>
 
   <!-- STEP 5 -->
-  <div class="step-row" data-observe>
-    <div class="step-text">
-      <p class="step-num">STEP 05</p>
-      <h2 class="step-title">הפוך את המעבר<br>ללא שווה</h2>
-      <p class="step-desc">
-        לא בונים חומות — בונים נוחות. ככל שהמשתמש עמוק יותר באקו-סיסטם שלך, המעבר לאחר פחות שווה לו. לא כי אתה חוסם — אלא כי ה<em>friction</em> של המעבר גבוה מהתועלת. זה הניצחון האמיתי.
-      </p>
-      <div class="step-pill">
-        <strong>DJI:</strong> כשיש לך רחפן, גימבל ומיקרופון שלהם — אתה לא תקנה מצלמה של חברה אחרת. לא כי אתה לא יכול — כי פשוט לא שווה.
+  <div class="step-wrap">
+    <span class="step-bg-num">05</span>
+    <div class="step-row" data-observe>
+      <div class="step-text">
+        <p class="step-kicker">STEP 05</p>
+        <h2 class="step-title">הפוך את המעבר<br>ללא שווה</h2>
+        <p class="step-body">לא בונים חומות — בונים נוחות. ככל שהמשתמש עמוק יותר באקו-סיסטם שלך, המעבר לאחר פחות שווה לו. לא כי אתה חוסם — אלא כי ה-friction של המעבר גבוה מהתועלת. זה הניצחון האמיתי.</p>
+        <div class="example-box"><strong>DJI:</strong> כשיש לך רחפן, גימבל ומיקרופון שלהם — אתה לא תקנה מצלמה של חברה אחרת. לא כי אתה לא יכול — כי פשוט לא שווה.</div>
+      </div>
+      <div class="step-vis">
+        <svg viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- connecting lines -->
+          <line x1="68" y1="120" x2="136" y2="82" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <line x1="148" y1="68" x2="192" y2="68" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <line x1="218" y1="80" x2="246" y2="112" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <line x1="64" y1="140" x2="148" y2="172" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="260" y1="140" x2="198" y2="172" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+          <!-- satellite nodes -->
+          <g class="chain-node" transform="translate(56,128)" style="animation-delay:.1s">
+            <circle r="26" fill="#141414" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+            <text y="4" text-anchor="middle" fill="#555" font-family="Heebo" font-size="10">רחפן</text>
+          </g>
+          <g class="chain-node" transform="translate(148,68)" style="animation-delay:.25s">
+            <circle r="26" fill="#191919" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+            <text y="4" text-anchor="middle" fill="#666" font-family="Heebo" font-size="10">גימבל</text>
+          </g>
+          <g class="chain-node" transform="translate(242,100)" style="animation-delay:.4s">
+            <circle r="26" fill="#1e1e1e" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
+            <text y="4" text-anchor="middle" fill="#777" font-family="Heebo" font-size="10">מצלמה</text>
+          </g>
+
+          <!-- center user node (glowing) -->
+          <g class="chain-node" transform="translate(170,182)" style="animation-delay:.55s">
+            <circle r="34" fill="white" style="filter:drop-shadow(0 0 16px rgba(255,255,255,0.5))"/>
+            <text y="-3" text-anchor="middle" fill="#000" font-family="Heebo" font-size="11" font-weight="700">המשתמש</text>
+            <text y="11" text-anchor="middle" fill="rgba(0,0,0,0.45)" font-family="Heebo" font-size="9">נעול ✓</text>
+          </g>
+        </svg>
       </div>
     </div>
-    <div class="step-visual">
-      <svg viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- chain nodes connected tightly -->
-        <circle class="chain-link" cx="60" cy="120" r="24" fill="#1a1a1a" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" style="animation-delay:0s"/>
-        <circle class="chain-link" cx="60" cy="120" r="14" fill="#252525" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <text x="60" y="124" text-anchor="middle" fill="#555" font-family="Heebo" font-size="9">רחפן</text>
-
-        <circle class="chain-link" cx="130" cy="80" r="24" fill="#1e1e1e" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" style="animation-delay:0.2s"/>
-        <circle class="chain-link" cx="130" cy="80" r="14" fill="#2a2a2a" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-        <text x="130" y="84" text-anchor="middle" fill="#666" font-family="Heebo" font-size="9">גימבל</text>
-
-        <circle class="chain-link" cx="200" cy="60" r="24" fill="#222" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" style="animation-delay:0.4s"/>
-        <circle class="chain-link" cx="200" cy="60" r="14" fill="#2e2e2e" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-        <text x="200" y="64" text-anchor="middle" fill="#777" font-family="Heebo" font-size="9">מצלמה</text>
-
-        <circle class="chain-link" cx="250" cy="120" r="24" fill="#262626" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" style="animation-delay:0.6s"/>
-        <circle class="chain-link" cx="250" cy="120" r="14" fill="#303030" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-        <text x="250" y="124" text-anchor="middle" fill="#888" font-family="Heebo" font-size="8">מיקרופון</text>
-
-        <circle class="chain-link" cx="170" cy="175" r="30" fill="#fff" stroke="rgba(255,255,255,0.8)" stroke-width="2" style="filter: drop-shadow(0 0 12px rgba(255,255,255,0.4)); animation-delay:0.8s"/>
-        <text x="170" y="172" text-anchor="middle" fill="#000" font-family="Heebo" font-size="10" font-weight="700">המשתמש</text>
-        <text x="170" y="184" text-anchor="middle" fill="rgba(0,0,0,0.5)" font-family="Heebo" font-size="8">נעול</text>
-
-        <!-- connecting lines -->
-        <line x1="78" y1="108" x2="112" y2="92" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <line x1="148" y1="70" x2="182" y2="65" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <line x1="220" y1="72" x2="238" y2="102" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-        <line x1="60" y1="144" x2="145" y2="162" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-        <line x1="250" y1="143" x2="198" y2="162" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-      </svg>
-    </div>
   </div>
-
 </section>
 
-<!-- ═══════════════ BUILDER ═══════════════ -->
+<!-- ══════════ BUILDER ══════════ -->
 <section class="builder-section">
-  <div class="builder-inner">
-    <div class="builder-left">
-      <div class="builder-header">
-        <p class="builder-label">Interactive Tool</p>
-        <h2 class="builder-title">בנה את<br>האקו-סיסטם שלך</h2>
-        <p class="builder-sub">הזן את המוצרים שלך — ותקבל ויזואליזציה של האקו-סיסטם.</p>
-      </div>
-
-      <div class="builder-field">
-        <label>מה המוצר הראשון שלך? (מוצר הכניסה)</label>
-        <input id="hero-product" type="text" placeholder="לדוגמה: אפליקציית ניהול פרויקטים" maxlength="40"/>
-      </div>
-
-      <div class="builder-field">
-        <label>מה הדבק — הפלטפורמה שמחברת הכל?</label>
-        <input id="glue-product" type="text" placeholder="לדוגמה: דאשבורד, API, חשבון משתמש" maxlength="40"/>
-      </div>
-
-      <div class="builder-field">
-        <label>אילו מוצרים נוספים יכולים להצטרף לאקו-סיסטם?</label>
-        <div class="products-grid">
-          <div class="product-chip"><span class="chip-num">01</span><input class="satellite" type="text" placeholder="מוצר..." maxlength="30"/></div>
-          <div class="product-chip"><span class="chip-num">02</span><input class="satellite" type="text" placeholder="מוצר..." maxlength="30"/></div>
-          <div class="product-chip"><span class="chip-num">03</span><input class="satellite" type="text" placeholder="מוצר..." maxlength="30"/></div>
-          <div class="product-chip"><span class="chip-num">04</span><input class="satellite" type="text" placeholder="מוצר..." maxlength="30"/></div>
-        </div>
-      </div>
-
-      <button class="builder-btn" id="build-btn">צור את האקו-סיסטם שלי ←</button>
+  <div class="builder-container">
+    <div class="builder-head">
+      <p class="eyebrow">Interactive Tool</p>
+      <h2>בנה את האקו-סיסטם שלך</h2>
+      <p>הזן את המוצרים שלך — וקבל ויזואליזציה של האקו-סיסטם שלך</p>
     </div>
-
-    <div class="builder-canvas-wrap">
-      <canvas id="builder-canvas"></canvas>
-      <div class="canvas-placeholder" id="canvas-placeholder">
-        <div class="placeholder-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="#333" stroke-width="1.5"/><circle cx="3" cy="4" r="2" stroke="#2a2a2a" stroke-width="1"/><circle cx="17" cy="4" r="2" stroke="#2a2a2a" stroke-width="1"/><circle cx="3" cy="16" r="2" stroke="#2a2a2a" stroke-width="1"/><circle cx="17" cy="16" r="2" stroke="#2a2a2a" stroke-width="1"/><line x1="7" y1="9" x2="5" y2="5.5" stroke="#222" stroke-width="1"/><line x1="13" y1="9" x2="15" y2="5.5" stroke="#222" stroke-width="1"/><line x1="7" y1="11" x2="5" y2="14.5" stroke="#222" stroke-width="1"/><line x1="13" y1="11" x2="15" y2="14.5" stroke="#222" stroke-width="1"/></svg>
+    <div class="builder-grid">
+      <div>
+        <div class="field">
+          <label>מה המוצר הראשון שלך? (מוצר הכניסה)</label>
+          <input id="inp-hero" type="text" placeholder="לדוגמה: אפליקציית ניהול פרויקטים" maxlength="36"/>
         </div>
-        <span>הזן את המוצרים שלך ולחץ על הכפתור</span>
+        <div class="field">
+          <label>מה הדבק — הפלטפורמה שמחברת הכל?</label>
+          <input id="inp-glue" type="text" placeholder="לדוגמה: דאשבורד, API, חשבון משתמש" maxlength="36"/>
+        </div>
+        <div class="field">
+          <label>אילו מוצרים נוספים יכולים להצטרף לאקו-סיסטם?</label>
+          <div class="sat-grid">
+            <div class="sat-chip"><span class="sat-num">01</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
+            <div class="sat-chip"><span class="sat-num">02</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
+            <div class="sat-chip"><span class="sat-num">03</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
+            <div class="sat-chip"><span class="sat-num">04</span><input class="inp-sat" type="text" placeholder="מוצר..." maxlength="28"/></div>
+          </div>
+        </div>
+        <button class="build-btn" id="build-btn">צור את האקו-סיסטם שלי ←</button>
+
+        <div class="score-bar" id="score-bar">
+          <div class="score-label">
+            <span>עוצמת האקו-סיסטם</span>
+            <span id="score-val">0%</span>
+          </div>
+          <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="canvas-wrap">
+          <canvas id="builder-canvas"></canvas>
+          <div class="canvas-empty" id="canvas-empty">
+            <div class="canvas-empty-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="9" r="3" stroke="#333" stroke-width="1.2"/>
+                <circle cx="2" cy="3" r="1.5" stroke="#282828" stroke-width="1"/>
+                <circle cx="16" cy="3" r="1.5" stroke="#282828" stroke-width="1"/>
+                <circle cx="2" cy="15" r="1.5" stroke="#282828" stroke-width="1"/>
+                <circle cx="16" cy="15" r="1.5" stroke="#282828" stroke-width="1"/>
+                <line x1="6" y1="8" x2="3.5" y2="4.5" stroke="#1e1e1e" stroke-width="1"/>
+                <line x1="12" y1="8" x2="14.5" y2="4.5" stroke="#1e1e1e" stroke-width="1"/>
+                <line x1="6" y1="10" x2="3.5" y2="13.5" stroke="#1e1e1e" stroke-width="1"/>
+                <line x1="12" y1="10" x2="14.5" y2="13.5" stroke="#1e1e1e" stroke-width="1"/>
+              </svg>
+            </div>
+            <p>מלא את הפרטים ולחץ על הכפתור</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ CTA ═══════════════ -->
+<!-- ══════════ CTA ══════════ -->
 <section class="cta-section">
-  <p class="cta-label">מה הלאה</p>
+  <p class="cta-kicker">מה הלאה</p>
   <h2 class="cta-title">תתחילו לחשוב<br>כמו DJI</h2>
-  <p class="cta-sub">
-    עכשיו יש לכם את הפלייבוק. השאלה היחידה שנשארת: איפה בוורקפלואו של המשתמש שלכם מסתתר המוצר הבא?
+  <p class="cta-body">
+    עכשיו יש לכם את הפלייבוק. השאלה היחידה שנשארת:<br>
+    איפה בוורקפלואו של המשתמש שלכם מסתתר המוצר הבא?
   </p>
-  <div class="cta-row">
-    <a href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank" class="btn-primary">לעוד תוכן כזה ←</a>
-    <a href="#" class="btn-secondary">שתף את זה</a>
+  <div class="cta-btns">
+    <a href="https://www.instagram.com/Aviv.Haziza" target="_blank" class="btn-w">לעוד תוכן כזה ←</a>
+    <a href="https://www.instagram.com/Aviv.Haziza" target="_blank" class="btn-g">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="4" r="1" fill="currentColor"/></svg>
+      Aviv.Haziza
+    </a>
   </div>
 </section>
 
+<!-- ══════════ FOOTER ══════════ -->
 <footer>
-  <p>עשוי עם ❤ · <span id="year"></span></p>
+  <span class="footer-credit">© <span id="yr"></span> · כל הזכויות שמורות</span>
+  <a href="https://www.instagram.com/Aviv.Haziza" target="_blank" class="footer-ig">
+    <span class="ig-icon">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><rect x=".5" y=".5" width="9" height="9" rx="2.5" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1"/><circle cx="7.5" cy="2.5" r=".6" fill="currentColor"/></svg>
+    </span>
+    נבנה על ידי Aviv Haziza
+  </a>
 </footer>
 
 <script>
-// ── YEAR ──
-document.getElementById('year').textContent = new Date().getFullYear();
+// ─── YEAR ───
+document.getElementById('yr').textContent = new Date().getFullYear();
 
-// ── HERO CANVAS ──
+// ─── HERO CANVAS ───
 (function() {
   const canvas = document.getElementById('hero-canvas');
   const ctx = canvas.getContext('2d');
-  const labels = ['רחפן', 'גימבל', 'מצלמה', 'מיקרופון', 'DJI Fly'];
-  let nodes = [], connections = [], startTime = null, animDone = false;
+  const LABELS = ['רחפן', 'גימבל', 'מצלמה', 'מיקרופון', 'DJI Fly'];
+
+  let particles = [];
+  let nodes = [];
+  let connections = [];
+  let startTime = null;
+  let heroShown = false;
 
   function resize() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-    buildLayout();
+    buildParticles();
+    buildNodes();
+    buildConnections();
   }
 
-  function buildLayout() {
+  function buildParticles() {
+    particles = Array.from({length: 55}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      o: Math.random() * 0.2 + 0.04
+    }));
+  }
+
+  function buildNodes() {
     const cx = canvas.width / 2, cy = canvas.height / 2;
-    const r = Math.min(canvas.width, canvas.height) * 0.28;
-    nodes = labels.map((label, i) => {
-      const a = (i / labels.length) * Math.PI * 2 - Math.PI / 2;
-      return { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r, label, opacity: 0, pulse: Math.random() * Math.PI * 2, delay: i * 280 };
+    const rad = Math.min(cx, cy) * 0.36;
+    nodes = LABELS.map((label, i) => {
+      const a = (i / LABELS.length) * Math.PI * 2 - Math.PI / 2;
+      return {
+        tx: cx + Math.cos(a) * rad,
+        ty: cy + Math.sin(a) * rad,
+        x: cx, y: cy,        // starts from center
+        label,
+        scale: 0,
+        delay: 600 + i * 220,
+        pulse: Math.random() * Math.PI * 2
+      };
     });
+  }
+
+  function buildConnections() {
     connections = [];
     for (let i = 0; i < nodes.length; i++)
       for (let j = i + 1; j < nodes.length; j++)
-        connections.push({ from: i, to: j, progress: 0, delay: 1400 + (i * nodes.length + j) * 80 });
+        connections.push({ from: i, to: j, progress: 0, delay: 1800 + (i * nodes.length + j) * 55 });
   }
 
-  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function easeOutBack(t) {
+    const c1 = 1.70158, c3 = c1 + 1;
+    return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+  }
+  function easeOut3(t) { return 1 - Math.pow(1 - t, 3); }
 
-  function draw(ts) {
+  function frame(ts) {
     if (!startTime) startTime = ts;
     const elapsed = ts - startTime;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
 
+    // particles
+    particles.forEach(p => {
+      p.x = (p.x + p.vx + w) % w;
+      p.y = (p.y + p.vy + h) % h;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${p.o})`;
+      ctx.fill();
+    });
+
+    // update nodes — spring out from center
     nodes.forEach(n => {
       const ne = elapsed - n.delay;
-      n.opacity = ne > 0 ? Math.min(1, easeInOut(ne / 600)) : 0;
+      if (ne > 0) {
+        const t = Math.min(1, ne / 520);
+        const s = easeOutBack(t);
+        n.x = (canvas.width / 2) + (n.tx - canvas.width / 2) * s;
+        n.y = (canvas.height / 2) + (n.ty - canvas.height / 2) * s;
+        n.scale = easeOut3(t);
+      }
       n.pulse += 0.018;
     });
 
+    // update connections
     connections.forEach(c => {
       const ce = elapsed - c.delay;
-      c.progress = ce > 0 ? Math.min(1, ce / 700) : 0;
+      c.progress = ce > 0 ? Math.min(1, ce / 650) : 0;
     });
 
-    // draw links
+    // draw connections
     connections.forEach(c => {
       if (c.progress <= 0) return;
       const a = nodes[c.from], b = nodes[c.to];
-      const alpha = Math.min(a.opacity, b.opacity) * c.progress * 0.18;
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(a.x + (b.x - a.x) * c.progress, a.y + (b.y - a.y) * c.progress);
-      ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      if (a.scale < 0.3 || b.scale < 0.3) return;
+      const ex = a.x + (b.x - a.x) * c.progress;
+      const ey = a.y + (b.y - a.y) * c.progress;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(ex, ey);
+      ctx.strokeStyle = `rgba(255,255,255,${0.12 * c.progress * Math.min(a.scale, b.scale)})`;
+      ctx.lineWidth = 1; ctx.stroke();
+      // traveling dot
+      if (c.progress < 1) {
+        ctx.beginPath(); ctx.arc(ex, ey, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fill();
+      }
     });
 
     // draw nodes
     nodes.forEach(n => {
-      if (n.opacity <= 0) return;
-      const pr = 8 + Math.sin(n.pulse) * 2;
-      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pr * 4);
-      g.addColorStop(0, `rgba(255,255,255,${0.12 * n.opacity})`);
+      if (n.scale <= 0.01) return;
+      const pr = (9 + Math.sin(n.pulse) * 2.5) * Math.max(0, n.scale);
+      // glow
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, pr * 4.5);
+      g.addColorStop(0, `rgba(180,160,255,${0.18 * n.scale})`);
+      g.addColorStop(0.4, `rgba(255,255,255,${0.07 * n.scale})`);
       g.addColorStop(1, 'transparent');
-      ctx.beginPath(); ctx.arc(n.x, n.y, pr * 4, 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(n.x, n.y, pr * 4.5, 0, Math.PI * 2);
       ctx.fillStyle = g; ctx.fill();
-
+      // dot
       ctx.beginPath(); ctx.arc(n.x, n.y, pr, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${n.opacity})`; ctx.fill();
-
-      ctx.fillStyle = `rgba(255,255,255,${n.opacity * 0.55})`;
-      ctx.font = '13px Heebo, sans-serif';
+      ctx.fillStyle = `rgba(255,255,255,${n.scale})`; ctx.fill();
+      // label
+      const labelAlpha = Math.max(0, n.scale - 0.3) / 0.7;
+      ctx.fillStyle = `rgba(255,255,255,${0.55 * labelAlpha})`;
+      ctx.font = `${Math.round(13 * n.scale)}px Heebo, sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(n.label, n.x, n.y + pr + 18);
+      ctx.fillText(n.label, n.x, n.y + pr + 17 * n.scale);
     });
 
     // reveal hero text
-    if (elapsed > 2400 && !animDone) {
+    if (elapsed > 2800 && !heroShown) {
       document.getElementById('hero-content').classList.add('visible');
-      animDone = true;
+      heroShown = true;
     }
 
-    requestAnimationFrame(draw);
+    requestAnimationFrame(frame);
   }
 
   resize();
   window.addEventListener('resize', resize);
-  requestAnimationFrame(draw);
+  requestAnimationFrame(frame);
 })();
 
-// ── SCROLL ANIMATIONS ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+// ─── SCROLL OBSERVER ───
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    io.unobserve(e.target);
+  });
 }, { threshold: 0.15 });
 
-document.querySelectorAll('[data-observe]').forEach(el => observer.observe(el));
+document.querySelectorAll('[data-observe]').forEach(el => io.observe(el));
 
-// ── BUILDER ──
+// ─── STATS COUNTERS ───
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    const numEl = e.target.querySelector('.stat-num');
+    const target = parseInt(numEl.dataset.count);
+    const suffix = numEl.dataset.suffix || '';
+    let start = null;
+    const dur = 1200;
+    function tick(ts) {
+      if (!start) start = ts;
+      const t = Math.min(1, (ts - start) / dur);
+      const ease = 1 - Math.pow(1 - t, 3);
+      numEl.textContent = Math.round(ease * target) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    statsObs.unobserve(e.target);
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-stat]').forEach(el => statsObs.observe(el));
+
+// ─── BUILDER ───
 (function() {
   const canvas = document.getElementById('builder-canvas');
   const ctx = canvas.getContext('2d');
-  const placeholder = document.getElementById('canvas-placeholder');
-  let ecosystem = null, animProgress = 0, animId = null;
+  const emptyEl = document.getElementById('canvas-empty');
+  const scoreBar = document.getElementById('score-bar');
+  const scoreFill = document.getElementById('score-fill');
+  const scoreVal = document.getElementById('score-val');
 
-  function resize() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    if (ecosystem) renderEcosystem(1);
+  let ecosystem = null;
+  let animT = 0;
+  let rafId = null;
+
+  function resizeCanvas() {
+    const wrap = canvas.parentElement;
+    canvas.width = wrap.offsetWidth;
+    canvas.height = wrap.offsetHeight;
+    if (ecosystem) renderAt(1);
   }
 
-  window.addEventListener('resize', resize);
-  resize();
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
-  document.getElementById('build-btn').addEventListener('click', build);
+  document.getElementById('build-btn').addEventListener('click', () => {
+    const hero = document.getElementById('inp-hero').value.trim();
+    const glue = document.getElementById('inp-glue').value.trim();
+    const sats = Array.from(document.querySelectorAll('.inp-sat')).map(i => i.value.trim()).filter(Boolean);
 
-  function build() {
-    const hero = document.getElementById('hero-product').value.trim();
-    const glue = document.getElementById('glue-product').value.trim();
-    const satellites = Array.from(document.querySelectorAll('.satellite'))
-      .map(i => i.value.trim()).filter(Boolean);
+    if (!hero) { document.getElementById('inp-hero').focus(); return; }
 
-    if (!hero) {
-      document.getElementById('hero-product').focus();
-      return;
+    ecosystem = { hero, glue, sats };
+    emptyEl.style.opacity = '0';
+
+    // score
+    const score = Math.min(100, (sats.length * 15) + (glue ? 40 : 0) + 10);
+    const label = score >= 80 ? 'חזק מאוד 🔥' : score >= 50 ? 'טוב, יש מה לשפר' : 'בתחילת הדרך';
+    scoreBar.classList.add('show');
+    setTimeout(() => {
+      scoreFill.style.width = score + '%';
+      scoreVal.textContent = score + '% · ' + label;
+    }, 100);
+
+    // animate
+    animT = 0;
+    if (rafId) cancelAnimationFrame(rafId);
+    animateBuilder();
+  });
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeOutBack(t) { return 1 + 1.70158 * 1 * Math.pow(t - 1, 3) + 1.70158 * Math.pow(t - 1, 2); }
+
+  function animateBuilder() {
+    animT = Math.min(1, animT + 0.022);
+    renderAt(animT);
+    if (animT < 1) rafId = requestAnimationFrame(animateBuilder);
+  }
+
+  function trunc(s, n) { return s.length > n ? s.slice(0, n - 1) + '…' : s; }
+
+  function drawNode(x, y, r, label, style = 'sat') {
+    if (style === 'hero') {
+      // white glow
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r * 3);
+      g.addColorStop(0, 'rgba(200,180,255,0.2)');
+      g.addColorStop(1, 'transparent');
+      ctx.beginPath(); ctx.arc(x, y, r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = g; ctx.fill();
+
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff'; ctx.fill();
+      ctx.fillStyle = '#000';
+      const fs = Math.min(13, (r * 1.5) / Math.max(1, label.length) * 7);
+      ctx.font = `bold ${fs}px Heebo, sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(trunc(label, 14), x, y);
+    } else if (style === 'glue') {
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      const fs = Math.min(11, (r * 1.4) / Math.max(1, label.length) * 6);
+      ctx.font = `${fs}px Heebo, sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(trunc(label, 14), x, y);
+    } else {
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#141414';
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 1;
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.65)';
+      const fs = Math.min(11, (r * 1.4) / Math.max(1, label.length) * 6);
+      ctx.font = `${fs}px Heebo, sans-serif`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(trunc(label, 14), x, y);
     }
-
-    placeholder.style.opacity = '0';
-    ecosystem = { hero, glue, satellites };
-    animProgress = 0;
-    if (animId) cancelAnimationFrame(animId);
-    animate();
   }
 
-  function animate() {
-    animProgress = Math.min(1, animProgress + 0.025);
-    renderEcosystem(animProgress);
-    if (animProgress < 1) animId = requestAnimationFrame(animate);
-  }
-
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
-  function renderEcosystem(p) {
+  function renderAt(p) {
     if (!ecosystem) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    const { hero, glue, sats } = ecosystem;
     const cx = canvas.width / 2, cy = canvas.height / 2;
-    const { hero, glue, satellites } = ecosystem;
-    const all = [hero, ...satellites].filter(Boolean);
-    const nodeR = Math.min(canvas.width, canvas.height) * 0.27;
-    const ep = easeOut(p);
+    const maxR = Math.min(cx, cy) * 0.72;
+
+    const ep = easeOutCubic(p);
+    const bp = easeOutBack(Math.min(1, p * 1.1));
 
     // glue ring
-    if (glue && p > 0.3) {
-      const gp = easeOut(Math.min(1, (p - 0.3) / 0.7));
+    if (glue && p > 0.2) {
+      const gp = easeOutCubic(Math.min(1, (p - 0.2) / 0.6));
       ctx.beginPath();
-      ctx.arc(cx, cy, 48, 0, Math.PI * 2 * gp);
-      ctx.strokeStyle = `rgba(255,255,255,${0.08 * gp})`;
-      ctx.lineWidth = 28;
+      ctx.arc(cx, cy, 54, 0, Math.PI * 2 * gp);
+      ctx.strokeStyle = `rgba(255,255,255,${0.06 * gp})`;
+      ctx.lineWidth = 30;
       ctx.stroke();
     }
 
-    // spokes & satellites
-    all.forEach((label, i) => {
-      if (i === 0) return; // skip hero, drawn last
-      const a = ((i - 1) / Math.max(1, all.length - 1)) * Math.PI * 2 - Math.PI / 2;
-      const tx = cx + Math.cos(a) * nodeR;
-      const ty = cy + Math.sin(a) * nodeR;
-      const np = easeOut(Math.min(1, Math.max(0, (p - i * 0.08) / 0.5)));
-      if (np <= 0) return;
+    // satellite nodes + spokes
+    sats.forEach((label, i) => {
+      const ni = i + 1; // offset so hero is separate
+      const total = sats.length;
+      const angle = (i / total) * Math.PI * 2 - Math.PI / 2;
+      const tx = cx + Math.cos(angle) * maxR;
+      const ty = cy + Math.sin(angle) * maxR;
+      const delay = 0.15 + i * 0.1;
+      const sp = easeOutBack(Math.max(0, Math.min(1, (p - delay) / 0.45)));
+      if (sp <= 0) return;
 
-      const ex = cx + (tx - cx) * np, ey = cy + (ty - cy) * np;
-      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey);
-      ctx.strokeStyle = `rgba(255,255,255,${0.12 * np})`; ctx.lineWidth = 1; ctx.stroke();
+      const nx = cx + (tx - cx) * sp;
+      const ny = cy + (ty - cy) * sp;
 
-      if (np > 0.7) {
-        const fp = (np - 0.7) / 0.3;
-        ctx.beginPath(); ctx.arc(tx, ty, 22, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(20,20,20,${fp})`; ctx.fill();
-        ctx.strokeStyle = `rgba(255,255,255,${0.2 * fp})`; ctx.lineWidth = 1; ctx.stroke();
-        ctx.fillStyle = `rgba(255,255,255,${0.8 * fp})`;
-        ctx.font = `${Math.min(11, 180 / label.length)}px Heebo, sans-serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(label.length > 14 ? label.slice(0,12) + '…' : label, tx, ty);
-      }
+      // spoke
+      const spokep = easeOutCubic(Math.max(0, Math.min(1, (p - delay) / 0.3)));
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + (tx - cx) * spokep, cy + (ty - cy) * spokep);
+      ctx.strokeStyle = `rgba(255,255,255,${0.1 * spokep})`; ctx.lineWidth = 1; ctx.stroke();
+
+      drawNode(nx, ny, Math.min(canvas.width, canvas.height) * 0.09, label, 'sat');
     });
 
-    // glue label inside ring
+    // glue label (inside ring)
     if (glue && p > 0.5) {
-      const gp = easeOut(Math.min(1, (p - 0.5) / 0.5));
-      ctx.fillStyle = `rgba(100,100,100,${0.6 * gp})`;
-      ctx.font = `9px Inter, sans-serif`;
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('GLUE', cx, cy + 42);
-      ctx.fillStyle = `rgba(150,150,150,${0.5 * gp})`;
-      ctx.font = `9px Heebo, sans-serif`;
-      ctx.fillText(glue.length > 16 ? glue.slice(0, 14) + '…' : glue, cx, cy + 54);
+      const gp = easeOutCubic(Math.min(1, (p - 0.5) / 0.4));
+      ctx.globalAlpha = gp;
+      drawNode(cx, cy + 68, Math.min(canvas.width, canvas.height) * 0.07, glue, 'glue');
+      ctx.globalAlpha = 1;
     }
 
-    // hero node (center)
-    const hr = 36 * ep;
-    const hg = ctx.createRadialGradient(cx, cy, 0, cx, cy, hr * 2.5);
-    hg.addColorStop(0, `rgba(255,255,255,${0.15 * ep})`);
-    hg.addColorStop(1, 'transparent');
-    ctx.beginPath(); ctx.arc(cx, cy, hr * 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = hg; ctx.fill();
-
-    ctx.beginPath(); ctx.arc(cx, cy, hr, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${ep})`; ctx.fill();
-    ctx.fillStyle = `rgba(0,0,0,${0.85 * ep})`;
-    ctx.font = `bold ${Math.min(13, 240 / hero.length)}px Heebo, sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(hero.length > 18 ? hero.slice(0, 16) + '…' : hero, cx, cy);
+    // hero node — last so it's on top, with spring
+    const heroR = Math.min(canvas.width, canvas.height) * 0.14 * bp;
+    ctx.globalAlpha = ep;
+    drawNode(cx, cy, heroR, hero, 'hero');
+    ctx.globalAlpha = 1;
   }
 })();
 </script>
